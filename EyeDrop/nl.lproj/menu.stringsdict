@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   Localizable.stringsdict.plist
+   EyeDrop
+
+   Created by Mattijs on 20/01/2017.
+   Copyright (c) 2017 Mattijs. All rights reserved.
+-->
+<plist version="1.0">
+    <dict>
+        <key>%d Minutes</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@minutes@</string>
+            <key>minutes</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>zero</key>
+                <string>%d Minuten</string>
+                <key>one</key>
+                <string>%d Minuut</string>
+                <key>other</key>
+                <string>%d Minuten</string>
+            </dict>
+        </dict>
+        <key>%d Minutes Remaining</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@minutes@</string>
+            <key>minutes</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>zero</key>
+                <string>%d Minuten Resterend</string>
+                <key>one</key>
+                <string>%d Minuut Resterend</string>
+                <key>other</key>
+                <string>%d Minuten Resterend</string>
+            </dict>
+        </dict>
+    </dict>
+</plist>

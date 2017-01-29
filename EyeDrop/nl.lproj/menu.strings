@@ -1,0 +1,21 @@
+/* The menu item tile which contains a submenu with gradations of darkness */
+"Darkness" = "Dimmen";
+
+/* 'High' gradation of darkness */
+"High" = "Hoog";
+
+/* 'Low' gradation of darkness */
+"Low" = "Laag";
+
+/* 'Medium' gradation of darkness */
+"Medium" = "Middel";
+
+/* 'Pause' the interval */
+"Pause" = "Pauzeren";
+
+/* Quit <appname> */
+"Quit %@" = "Stop %@";
+
+/* 'Resume' the interval */
+"Resume" = "Hervatten";
+

@@ -1,0 +1,646 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DF031E121E37FB7300E9F360 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF031E111E37FB7300E9F360 /* Assets.xcassets */; };
+		DF7956011E26CDA50066904E /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7956001E26CDA50066904E /* AppSettings.swift */; };
+		DFAF73241E26BF7100A9469E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF73231E26BF7100A9469E /* AppDelegate.swift */; };
+		DFAF73341E26BF7100A9469E /* EyeDropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF73331E26BF7100A9469E /* EyeDropTests.swift */; };
+		DFAF733F1E26BF7100A9469E /* EyeDropUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAF733E1E26BF7100A9469E /* EyeDropUITests.swift */; };
+		DFD4DDF71E32983F00C88A05 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFD4DDF51E32983F00C88A05 /* MainMenu.xib */; };
+		DFD4DE031E32A39D00C88A05 /* menu.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = DFD4DE051E32A39D00C88A05 /* menu.stringsdict */; };
+		DFD4DE0D1E32A94D00C88A05 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DFD4DE0F1E32A94D00C88A05 /* InfoPlist.strings */; };
+		DFD4DE121E32A94E00C88A05 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DFD4DE141E32A94E00C88A05 /* InfoPlist.strings */; };
+		DFD4DE1C1E32A94F00C88A05 /* menu.strings in Resources */ = {isa = PBXBuildFile; fileRef = DFD4DE1E1E32A94F00C88A05 /* menu.strings */; };
+		DFDC50C51E3891E10032ACE0 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDC50C41E3891E10032ACE0 /* OverlayView.swift */; };
+		DFDC50D21E38C04C0032ACE0 /* eyedrop_active.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50CA1E38C04C0032ACE0 /* eyedrop_active.png */; };
+		DFDC50D31E38C04C0032ACE0 /* eyedrop_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50CB1E38C04C0032ACE0 /* eyedrop_active@2x.png */; };
+		DFDC50D41E38C04C0032ACE0 /* eyedrop_delayed.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50CC1E38C04C0032ACE0 /* eyedrop_delayed.png */; };
+		DFDC50D51E38C04C0032ACE0 /* eyedrop_delayed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50CD1E38C04C0032ACE0 /* eyedrop_delayed@2x.png */; };
+		DFDC50D61E38C04C0032ACE0 /* eyedrop_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50CE1E38C04C0032ACE0 /* eyedrop_normal.png */; };
+		DFDC50D71E38C04C0032ACE0 /* eyedrop_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50CF1E38C04C0032ACE0 /* eyedrop_normal@2x.png */; };
+		DFDC50D81E38C04C0032ACE0 /* eyedrop_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50D01E38C04C0032ACE0 /* eyedrop_pause.png */; };
+		DFDC50D91E38C04C0032ACE0 /* eyedrop_pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50D11E38C04C0032ACE0 /* eyedrop_pause@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DFAF73301E26BF7100A9469E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFAF73181E26BF7100A9469E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFAF731F1E26BF7100A9469E;
+			remoteInfo = EyeDrop;
+		};
+		DFAF733B1E26BF7100A9469E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFAF73181E26BF7100A9469E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFAF731F1E26BF7100A9469E;
+			remoteInfo = EyeDrop;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DF031E111E37FB7300E9F360 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DF7956001E26CDA50066904E /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		DFAF73201E26BF7100A9469E /* EyeDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyeDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFAF73231E26BF7100A9469E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DFAF732A1E26BF7100A9469E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFAF732F1E26BF7100A9469E /* EyeDropTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EyeDropTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFAF73331E26BF7100A9469E /* EyeDropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDropTests.swift; sourceTree = "<group>"; };
+		DFAF73351E26BF7100A9469E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFAF733A1E26BF7100A9469E /* EyeDropUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EyeDropUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFAF733E1E26BF7100A9469E /* EyeDropUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDropUITests.swift; sourceTree = "<group>"; };
+		DFAF73401E26BF7100A9469E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFD4DDF41E325A7C00C88A05 /* EyeDrop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EyeDrop.entitlements; sourceTree = "<group>"; };
+		DFD4DDF61E32983F00C88A05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		DFD4DE041E32A39D00C88A05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = Base; path = Base.lproj/menu.stringsdict; sourceTree = "<group>"; };
+		DFD4DE0E1E32A94D00C88A05 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DFD4DE131E32A94E00C88A05 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DFD4DE1F1E32A99300C88A05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/menu.strings; sourceTree = "<group>"; };
+		DFD4DE211E32AC1700C88A05 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/menu.strings; sourceTree = "<group>"; };
+		DFD4DE221E32AC1700C88A05 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nl; path = nl.lproj/menu.stringsdict; sourceTree = "<group>"; };
+		DFD4DE231E32AC1700C88A05 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DFD4DE241E32AC1700C88A05 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DFD4DE251E32AD1200C88A05 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/menu.strings"; sourceTree = "<group>"; };
+		DFD4DE261E32AD1200C88A05 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-PT"; path = "pt-PT.lproj/menu.stringsdict"; sourceTree = "<group>"; };
+		DFDC50C41E3891E10032ACE0 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		DFDC50CA1E38C04C0032ACE0 /* eyedrop_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eyedrop_active.png; sourceTree = "<group>"; };
+		DFDC50CB1E38C04C0032ACE0 /* eyedrop_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eyedrop_active@2x.png"; sourceTree = "<group>"; };
+		DFDC50CC1E38C04C0032ACE0 /* eyedrop_delayed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eyedrop_delayed.png; sourceTree = "<group>"; };
+		DFDC50CD1E38C04C0032ACE0 /* eyedrop_delayed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eyedrop_delayed@2x.png"; sourceTree = "<group>"; };
+		DFDC50CE1E38C04C0032ACE0 /* eyedrop_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eyedrop_normal.png; sourceTree = "<group>"; };
+		DFDC50CF1E38C04C0032ACE0 /* eyedrop_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eyedrop_normal@2x.png"; sourceTree = "<group>"; };
+		DFDC50D01E38C04C0032ACE0 /* eyedrop_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eyedrop_pause.png; sourceTree = "<group>"; };
+		DFDC50D11E38C04C0032ACE0 /* eyedrop_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eyedrop_pause@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DFAF731D1E26BF7100A9469E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFAF732C1E26BF7100A9469E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFAF73371E26BF7100A9469E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DFAF73171E26BF7100A9469E = {
+			isa = PBXGroup;
+			children = (
+				DFAF73221E26BF7100A9469E /* EyeDrop */,
+				DFAF73321E26BF7100A9469E /* EyeDropTests */,
+				DFAF733D1E26BF7100A9469E /* EyeDropUITests */,
+				DFAF73211E26BF7100A9469E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DFAF73211E26BF7100A9469E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DFAF73201E26BF7100A9469E /* EyeDrop.app */,
+				DFAF732F1E26BF7100A9469E /* EyeDropTests.xctest */,
+				DFAF733A1E26BF7100A9469E /* EyeDropUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DFAF73221E26BF7100A9469E /* EyeDrop */ = {
+			isa = PBXGroup;
+			children = (
+				DFDC50C91E38C04C0032ACE0 /* icons */,
+				DF031E111E37FB7300E9F360 /* Assets.xcassets */,
+				DFD4DE1E1E32A94F00C88A05 /* menu.strings */,
+				DFD4DDF41E325A7C00C88A05 /* EyeDrop.entitlements */,
+				DFAF732A1E26BF7100A9469E /* Info.plist */,
+				DFAF73231E26BF7100A9469E /* AppDelegate.swift */,
+				DF7956001E26CDA50066904E /* AppSettings.swift */,
+				DFD4DDF51E32983F00C88A05 /* MainMenu.xib */,
+				DFD4DE051E32A39D00C88A05 /* menu.stringsdict */,
+				DFDC50C41E3891E10032ACE0 /* OverlayView.swift */,
+			);
+			path = EyeDrop;
+			sourceTree = "<group>";
+		};
+		DFAF73321E26BF7100A9469E /* EyeDropTests */ = {
+			isa = PBXGroup;
+			children = (
+				DFD4DE0F1E32A94D00C88A05 /* InfoPlist.strings */,
+				DFAF73331E26BF7100A9469E /* EyeDropTests.swift */,
+				DFAF73351E26BF7100A9469E /* Info.plist */,
+			);
+			path = EyeDropTests;
+			sourceTree = "<group>";
+		};
+		DFAF733D1E26BF7100A9469E /* EyeDropUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DFD4DE141E32A94E00C88A05 /* InfoPlist.strings */,
+				DFAF733E1E26BF7100A9469E /* EyeDropUITests.swift */,
+				DFAF73401E26BF7100A9469E /* Info.plist */,
+			);
+			path = EyeDropUITests;
+			sourceTree = "<group>";
+		};
+		DFDC50C91E38C04C0032ACE0 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				DFDC50CA1E38C04C0032ACE0 /* eyedrop_active.png */,
+				DFDC50CB1E38C04C0032ACE0 /* eyedrop_active@2x.png */,
+				DFDC50CC1E38C04C0032ACE0 /* eyedrop_delayed.png */,
+				DFDC50CD1E38C04C0032ACE0 /* eyedrop_delayed@2x.png */,
+				DFDC50CE1E38C04C0032ACE0 /* eyedrop_normal.png */,
+				DFDC50CF1E38C04C0032ACE0 /* eyedrop_normal@2x.png */,
+				DFDC50D01E38C04C0032ACE0 /* eyedrop_pause.png */,
+				DFDC50D11E38C04C0032ACE0 /* eyedrop_pause@2x.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DFAF731F1E26BF7100A9469E /* EyeDrop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFAF73431E26BF7100A9469E /* Build configuration list for PBXNativeTarget "EyeDrop" */;
+			buildPhases = (
+				DFAF731C1E26BF7100A9469E /* Sources */,
+				DFAF731D1E26BF7100A9469E /* Frameworks */,
+				DFAF731E1E26BF7100A9469E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EyeDrop;
+			productName = EyeDrop;
+			productReference = DFAF73201E26BF7100A9469E /* EyeDrop.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DFAF732E1E26BF7100A9469E /* EyeDropTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFAF73461E26BF7100A9469E /* Build configuration list for PBXNativeTarget "EyeDropTests" */;
+			buildPhases = (
+				DFAF732B1E26BF7100A9469E /* Sources */,
+				DFAF732C1E26BF7100A9469E /* Frameworks */,
+				DFAF732D1E26BF7100A9469E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DFAF73311E26BF7100A9469E /* PBXTargetDependency */,
+			);
+			name = EyeDropTests;
+			productName = EyeDropTests;
+			productReference = DFAF732F1E26BF7100A9469E /* EyeDropTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DFAF73391E26BF7100A9469E /* EyeDropUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFAF73491E26BF7100A9469E /* Build configuration list for PBXNativeTarget "EyeDropUITests" */;
+			buildPhases = (
+				DFAF73361E26BF7100A9469E /* Sources */,
+				DFAF73371E26BF7100A9469E /* Frameworks */,
+				DFAF73381E26BF7100A9469E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DFAF733C1E26BF7100A9469E /* PBXTargetDependency */,
+			);
+			name = EyeDropUITests;
+			productName = EyeDropUITests;
+			productReference = DFAF733A1E26BF7100A9469E /* EyeDropUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DFAF73181E26BF7100A9469E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = Mattijs;
+				TargetAttributes = {
+					DFAF731F1E26BF7100A9469E = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = GQPY9T2F79;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
+					DFAF732E1E26BF7100A9469E = {
+						CreatedOnToolsVersion = 8.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DFAF731F1E26BF7100A9469E;
+					};
+					DFAF73391E26BF7100A9469E = {
+						CreatedOnToolsVersion = 8.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DFAF731F1E26BF7100A9469E;
+					};
+				};
+			};
+			buildConfigurationList = DFAF731B1E26BF7100A9469E /* Build configuration list for PBXProject "EyeDrop" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				nl,
+				"pt-PT",
+			);
+			mainGroup = DFAF73171E26BF7100A9469E;
+			productRefGroup = DFAF73211E26BF7100A9469E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DFAF731F1E26BF7100A9469E /* EyeDrop */,
+				DFAF732E1E26BF7100A9469E /* EyeDropTests */,
+				DFAF73391E26BF7100A9469E /* EyeDropUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DFAF731E1E26BF7100A9469E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFD4DE031E32A39D00C88A05 /* menu.stringsdict in Resources */,
+				DFDC50D31E38C04C0032ACE0 /* eyedrop_active@2x.png in Resources */,
+				DFDC50D91E38C04C0032ACE0 /* eyedrop_pause@2x.png in Resources */,
+				DFDC50D81E38C04C0032ACE0 /* eyedrop_pause.png in Resources */,
+				DFDC50D61E38C04C0032ACE0 /* eyedrop_normal.png in Resources */,
+				DFDC50D51E38C04C0032ACE0 /* eyedrop_delayed@2x.png in Resources */,
+				DFDC50D21E38C04C0032ACE0 /* eyedrop_active.png in Resources */,
+				DFD4DDF71E32983F00C88A05 /* MainMenu.xib in Resources */,
+				DFDC50D71E38C04C0032ACE0 /* eyedrop_normal@2x.png in Resources */,
+				DF031E121E37FB7300E9F360 /* Assets.xcassets in Resources */,
+				DFD4DE1C1E32A94F00C88A05 /* menu.strings in Resources */,
+				DFDC50D41E38C04C0032ACE0 /* eyedrop_delayed.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFAF732D1E26BF7100A9469E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFD4DE0D1E32A94D00C88A05 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFAF73381E26BF7100A9469E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFD4DE121E32A94E00C88A05 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DFAF731C1E26BF7100A9469E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFDC50C51E3891E10032ACE0 /* OverlayView.swift in Sources */,
+				DF7956011E26CDA50066904E /* AppSettings.swift in Sources */,
+				DFAF73241E26BF7100A9469E /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFAF732B1E26BF7100A9469E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFAF73341E26BF7100A9469E /* EyeDropTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFAF73361E26BF7100A9469E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFAF733F1E26BF7100A9469E /* EyeDropUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DFAF73311E26BF7100A9469E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFAF731F1E26BF7100A9469E /* EyeDrop */;
+			targetProxy = DFAF73301E26BF7100A9469E /* PBXContainerItemProxy */;
+		};
+		DFAF733C1E26BF7100A9469E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFAF731F1E26BF7100A9469E /* EyeDrop */;
+			targetProxy = DFAF733B1E26BF7100A9469E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DFD4DDF51E32983F00C88A05 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFD4DDF61E32983F00C88A05 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		DFD4DE051E32A39D00C88A05 /* menu.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFD4DE041E32A39D00C88A05 /* Base */,
+				DFD4DE221E32AC1700C88A05 /* nl */,
+				DFD4DE261E32AD1200C88A05 /* pt-PT */,
+			);
+			name = menu.stringsdict;
+			sourceTree = "<group>";
+		};
+		DFD4DE0F1E32A94D00C88A05 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFD4DE0E1E32A94D00C88A05 /* en */,
+				DFD4DE231E32AC1700C88A05 /* nl */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DFD4DE141E32A94E00C88A05 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFD4DE131E32A94E00C88A05 /* en */,
+				DFD4DE241E32AC1700C88A05 /* nl */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DFD4DE1E1E32A94F00C88A05 /* menu.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFD4DE1F1E32A99300C88A05 /* Base */,
+				DFD4DE211E32AC1700C88A05 /* nl */,
+				DFD4DE251E32AD1200C88A05 /* pt-PT */,
+			);
+			name = menu.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DFAF73411E26BF7100A9469E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DFAF73421E26BF7100A9469E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		DFAF73441E26BF7100A9469E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EyeDrop/EyeDrop.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = GQPY9T2F79;
+				INFOPLIST_FILE = EyeDrop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = es.sqcub.EyeDrop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		DFAF73451E26BF7100A9469E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EyeDrop/EyeDrop.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = GQPY9T2F79;
+				INFOPLIST_FILE = EyeDrop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = es.sqcub.EyeDrop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		DFAF73471E26BF7100A9469E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = EyeDropTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = es.sqcub.EyeDropTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EyeDrop.app/Contents/MacOS/EyeDrop";
+			};
+			name = Debug;
+		};
+		DFAF73481E26BF7100A9469E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = EyeDropTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = es.sqcub.EyeDropTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EyeDrop.app/Contents/MacOS/EyeDrop";
+			};
+			name = Release;
+		};
+		DFAF734A1E26BF7100A9469E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = EyeDropUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = es.sqcub.EyeDropUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = EyeDrop;
+			};
+			name = Debug;
+		};
+		DFAF734B1E26BF7100A9469E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = EyeDropUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = es.sqcub.EyeDropUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = EyeDrop;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DFAF731B1E26BF7100A9469E /* Build configuration list for PBXProject "EyeDrop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFAF73411E26BF7100A9469E /* Debug */,
+				DFAF73421E26BF7100A9469E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFAF73431E26BF7100A9469E /* Build configuration list for PBXNativeTarget "EyeDrop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFAF73441E26BF7100A9469E /* Debug */,
+				DFAF73451E26BF7100A9469E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFAF73461E26BF7100A9469E /* Build configuration list for PBXNativeTarget "EyeDropTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFAF73471E26BF7100A9469E /* Debug */,
+				DFAF73481E26BF7100A9469E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFAF73491E26BF7100A9469E /* Build configuration list for PBXNativeTarget "EyeDropUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFAF734A1E26BF7100A9469E /* Debug */,
+				DFAF734B1E26BF7100A9469E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DFAF73181E26BF7100A9469E /* Project object */;
+}
