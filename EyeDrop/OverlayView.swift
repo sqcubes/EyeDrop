@@ -11,8 +11,9 @@ import Cocoa
 protocol OverlayViewDelegate {
     func overlayViewClicked(overlayView: OverlayView)
 }
+
 class OverlayView: NSView {
-    var delegate: OverlayViewDelegate
+    var delegate: OverlayViewDelegate?
     
     init(delegate: OverlayViewDelegate) {
         self.delegate = delegate
@@ -20,14 +21,13 @@ class OverlayView: NSView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     override func mouseUp(with event: NSEvent) {
         super.mouseUp(with: event)
-        
         if event.clickCount == 2 {
-            delegate.overlayViewClicked(overlayView: self)
+            delegate?.overlayViewClicked(overlayView: self)
         }
     }
 }
