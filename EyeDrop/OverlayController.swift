@@ -13,6 +13,7 @@ class OverlayController {
     var displayedOverlays = [NSWindow]()
     var isDisplayingOverlay: Bool = false
     var animationSpeed: TimeInterval = 1.0
+    var hideLogo: Bool = false
     var windowLevel: CGWindowLevelKey = .maximumWindow
     
     private func createOverlays(darkness: DarknessOption) -> [NSWindow] {
@@ -23,6 +24,7 @@ class OverlayController {
             let frame = screens[i].frame
             let overlay = NSWindow(contentRect: frame, styleMask: NSWindowStyleMask.borderless, backing: NSBackingStoreType.buffered, defer: false)
             let view = OverlayView(delegate: self)
+            view.hideLogo = hideLogo
             view.wantsLayer = true
             view.layer?.backgroundColor = NSColor.black.withAlphaComponent(darkness.alpha).cgColor
             overlay.contentView = view

@@ -14,10 +14,28 @@ protocol OverlayViewDelegate {
 
 class OverlayView: NSView {
     var delegate: OverlayViewDelegate?
+    private let logoImageView = NSImageView()
+    var hideLogo: Bool = false {
+        didSet {
+            logoImageView.isHidden = hideLogo
+        }
+    }
     
     init(delegate: OverlayViewDelegate) {
         self.delegate = delegate
         super.init(frame: NSRect.zero)
+        
+        if let logoImage = NSImage(named: "Watermark") {
+            logoImageView.image = logoImage
+            logoImageView.alphaValue = 0.10
+            logoImageView.frame = CGRect(x: 0, y: 0, width: logoImage.size.width, height: logoImage.size.height)
+            logoImageView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(logoImageView)
+            
+            let views = ["logo": logoImageView]
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[logo]-25-|", options: [], metrics: nil, views: views))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[logo]-20-|", options: [], metrics: nil, views: views))
+        }
     }
     
     required init?(coder: NSCoder) {

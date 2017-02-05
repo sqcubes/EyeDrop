@@ -22,6 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusMenuController.delegate = self
         
         previewOverlayController.windowLevel = .mainMenuWindow
+        previewOverlayController.hideLogo = false
         previewOverlayController.animationSpeed = 0.3
         
         eyeDropController.start()
