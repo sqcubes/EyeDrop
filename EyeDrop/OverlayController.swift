@@ -11,37 +11,44 @@ import Cocoa
 
 class OverlayController {    
     var displayedOverlays = [NSWindow]()
+    var isDisplayingOverlay: Bool = false
+    var animationSpeed: TimeInterval = 1.0
+    var windowLevel: CGWindowLevelKey = .maximumWindow
     
-    private func createOverlays() -> [NSWindow] {
+    private func createOverlays(darkness: DarknessOption) -> [NSWindow] {
         let screens = NSScreen.screens() ?? []
         var overlays = [NSWindow]()
-        
-        // for safety clamp alpha to be at least 0.5
-        let alpha = max(0.5, DarknessOption(rawValue: AppSettings.darknessOption.integer)!.alpha)
         
         for i in 0..<screens.count {
             let frame = screens[i].frame
             let overlay = NSWindow(contentRect: frame, styleMask: NSWindowStyleMask.borderless, backing: NSBackingStoreType.buffered, defer: false)
             let view = OverlayView(delegate: self)
             view.wantsLayer = true
-            view.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.0).cgColor
+            view.layer?.backgroundColor = NSColor.black.withAlphaComponent(darkness.alpha).cgColor
             overlay.contentView = view
             overlay.isOpaque = false
             overlay.hasShadow = false
             overlay.isReleasedWhenClosed = false
-            overlay.level = Int(CGWindowLevelForKey(.popUpMenuWindow))
+            overlay.level = Int(CGWindowLevelForKey(windowLevel))
             
-            overlay.backgroundColor = NSColor.black.withAlphaComponent(CGFloat(alpha))
+            overlay.backgroundColor = NSColor.white.withAlphaComponent(0.0)
             
             overlays.append(overlay)
         }
         return overlays
     }
     
-    public func displayOverlay(timeout: TimeInterval) {
-        closeOverlays(overlays: self.displayedOverlays)
+    public func show(duration: TimeInterval, darkness: DarknessOption) {
+        if isDisplayingOverlay {
+            animate(darkness: darkness)
+            return
+        }
+        // hide existing overlays
+        hide()
         
-        let overlays = createOverlays()
+        isDisplayingOverlay = true
+        
+        let overlays = createOverlays(darkness: darkness)
         
         // initially init overlays fully transparent
         overlays.forEach { overlay in
@@ -54,28 +61,47 @@ class OverlayController {
         
         // fade in overlays
         NSAnimationContext.runAnimationGroup({ (context) -> Void in
-            context.duration = 1.0
-            overlays.forEach { $0.animator().alphaValue = 1 }
+            context.duration = animationSpeed
+            overlays.forEach { $0.animator().alphaValue = 1.0 }
         }, completionHandler: {
             // schedule timer for removing the overlays after timeout
-            Timer.scheduledTimer(timeInterval: timeout, target: self, selector: #selector(self.overlayDisplayTimeOut(timer:)), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(self.overlayDisplayTimeOut(timer:)), userInfo: nil, repeats: false)
         })
     }
     
-    func closeOverlays() {
-        closeOverlays(overlays: self.displayedOverlays)
-    }
-    
-    private func closeOverlays(overlays: [NSWindow]) {
-        for overlay in overlays {
-            closeOverlay(overlay: overlay)
+    /**
+     Animates only the darkness of the window (e.g. background color)
+     */
+    private func animate(darkness: DarknessOption) {
+        let toColor = NSColor.black.withAlphaComponent(darkness.alpha).cgColor
+        let fromColor = displayedOverlays.first?.contentView?.layer?.backgroundColor ?? toColor
+        
+        for overlay in displayedOverlays {
+            let darknessAnimation = CABasicAnimation(keyPath: "backgroundColor")
+            darknessAnimation.fromValue = fromColor
+            darknessAnimation.toValue = toColor
+            
+            overlay.contentView?.layer?.add(darknessAnimation, forKey: "darkness")
+            overlay.contentView?.layer?.backgroundColor = toColor
         }
     }
     
-    private func closeOverlay(overlay: NSWindow) {
+    func hide() {
+        isDisplayingOverlay = false
+        
+        for overlay in displayedOverlays {
+            hide(overlay: overlay)
+        }
+    }
+    
+    /**
+     Hides one specific overlay by fading out the window's alpha. Once the fade out transition
+     is complete the window will be closed and removed from `displayedOverlays`
+     */
+    private func hide(overlay: NSWindow) {
         // fade out overlays
         NSAnimationContext.runAnimationGroup({ (context) -> Void in
-            context.duration = 1.0
+            context.duration = animationSpeed
             overlay.animator().alphaValue = 0
         }, completionHandler: {
             // close overay once fully faded-out
@@ -89,12 +115,12 @@ class OverlayController {
     
     @objc
     private func overlayDisplayTimeOut(timer: Timer) {
-        closeOverlays()
+        hide()
     }
 }
 
 extension OverlayController: OverlayViewDelegate {
     func overlayViewClicked(overlayView: OverlayView) {
-        closeOverlays()
+        hide()
     }
 }

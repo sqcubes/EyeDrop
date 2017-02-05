@@ -77,7 +77,7 @@ class EyeDropController {
         // timeout = interval minutes as 1:1 seconds
         // example = interval = 600s, timeout = 10s
         let timeout = timer.timeInterval / 60
-        overlayController.displayOverlay(timeout: timeout)
+        overlayController.show(duration: timeout, darkness: darkness)
     }
     
     @objc private func checkScreenLockState() {
@@ -129,7 +129,7 @@ class EyeDropController {
 
     
     private func suspend() {
-        overlayController.closeOverlays()
+        overlayController.hide()
         cancelInterval()
     }
     

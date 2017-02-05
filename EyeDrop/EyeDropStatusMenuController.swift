@@ -14,6 +14,7 @@ protocol EyeDropStatusMenuControllerDelegate {
     func menuResumeIntervalTapped()
     func menuChangeIntervalTapped(interval: TimeInterval)
     func menuChangeDarknessOptionTapped(darknessOption: DarknessOption)
+    func menuHighlightsDarknessOption(darknessOption: DarknessOption?)
     func menuQuitApplicationTapped()
     func menuShouldUpdateState()
 }
@@ -63,6 +64,15 @@ class EyeDropStatusMenuController: NSObject {
         item.tag = MenuItemTags.MinutesRemaining.tag
         return item
     }()
+    
+    // tracks the highlighted darkenss menu item option
+    fileprivate var highlightedDarknessOption: DarknessOption? = nil {
+        didSet {
+            if oldValue != highlightedDarknessOption {
+                delegate?.menuHighlightsDarknessOption(darknessOption: highlightedDarknessOption)
+            }
+        }
+    }
     
     override init() {
         super.init()
@@ -138,6 +148,8 @@ class EyeDropStatusMenuController: NSObject {
     }
     
     private func populateDarknessStatusBarMenu(menu: NSMenu) {
+        menu.delegate = self
+        
         // ordered options
         let darknessOptions: [DarknessOption] = [.High, .Medium, .Low]
         
@@ -262,6 +274,18 @@ extension EyeDropStatusMenuController: NSMenuDelegate {
         // as it contains the minutes remaining item
         if menu == normalMenu {
             delegate?.menuShouldUpdateState()
+        }
+    }
+    
+    func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
+        if menu == darknessMenu {
+            highlightedDarknessOption = item?.representedObject as? DarknessOption
+        }
+    }
+    
+    func menuDidClose(_ menu: NSMenu) {
+        if menu == darknessMenu {
+            highlightedDarknessOption = nil
         }
     }
 }

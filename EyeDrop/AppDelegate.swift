@@ -13,12 +13,16 @@ import Darwin
 class AppDelegate: NSObject, NSApplicationDelegate {
     fileprivate let eyeDropController = EyeDropController()
     fileprivate let statusMenuController = EyeDropStatusMenuController()
+    fileprivate let previewOverlayController = OverlayController()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         AppSettings.registerDefaults()
         
         eyeDropController.delegate = self
         statusMenuController.delegate = self
+        
+        previewOverlayController.windowLevel = .mainMenuWindow
+        previewOverlayController.animationSpeed = 0.3
         
         eyeDropController.start()
         statusMenuController.show(currentState: eyeDropController.state)
@@ -64,5 +68,12 @@ extension AppDelegate: EyeDropControllerDelegate {
     }
     func eyeDropController(eyeDrop: EyeDropController, didUpdateDarkness darkness: DarknessOption) {
         statusMenuController.update(forDarknessOption: darkness)
+    }
+    func menuHighlightsDarknessOption(darknessOption: DarknessOption?) {
+        if let darknessOption = darknessOption {
+            previewOverlayController.show(duration: TimeInterval.infinity, darkness: darknessOption)
+        } else {
+            previewOverlayController.hide()
+        }
     }
 }
