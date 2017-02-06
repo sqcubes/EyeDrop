@@ -14,6 +14,7 @@ class OverlayController {
     var isDisplayingOverlay: Bool = false
     var animationSpeed: TimeInterval = 1.0
     var hideLogo: Bool = false
+    var blur: Bool = true
     var windowLevel: CGWindowLevelKey = .maximumWindow
     
     private func createOverlays(darkness: DarknessOption) -> [NSWindow] {
@@ -22,20 +23,20 @@ class OverlayController {
         
         for i in 0..<screens.count {
             let frame = screens[i].frame
-            let overlay = NSWindow(contentRect: frame, styleMask: NSWindowStyleMask.borderless, backing: NSBackingStoreType.buffered, defer: false)
-            let view = OverlayView(delegate: self)
-            view.hideLogo = hideLogo
-            view.wantsLayer = true
-            view.layer?.backgroundColor = NSColor.black.withAlphaComponent(darkness.alpha).cgColor
-            overlay.contentView = view
-            overlay.isOpaque = false
-            overlay.hasShadow = false
-            overlay.isReleasedWhenClosed = false
-            overlay.level = Int(CGWindowLevelForKey(windowLevel))
+            let overlayWindow = NSWindow(contentRect: frame, styleMask: NSWindowStyleMask.borderless, backing: NSBackingStoreType.buffered, defer: false)
+            overlayWindow.isOpaque = false
+            overlayWindow.hasShadow = false
+            overlayWindow.isReleasedWhenClosed = false
+            overlayWindow.level = Int(CGWindowLevelForKey(windowLevel))
+            overlayWindow.backgroundColor = NSColor.clear
             
-            overlay.backgroundColor = NSColor.white.withAlphaComponent(0.0)
-            
-            overlays.append(overlay)
+            let overlayView = OverlayView(delegate: self)
+            overlayView.hideLogo = hideLogo
+            overlayView.blur = blur
+            overlayView.darkness = darkness
+            overlayWindow.contentView = overlayView
+        
+            overlays.append(overlayWindow)
         }
         return overlays
     }
@@ -75,16 +76,8 @@ class OverlayController {
      Animates only the darkness of the window (e.g. background color)
      */
     private func animate(darkness: DarknessOption) {
-        let toColor = NSColor.black.withAlphaComponent(darkness.alpha).cgColor
-        let fromColor = displayedOverlays.first?.contentView?.layer?.backgroundColor ?? toColor
-        
         for overlay in displayedOverlays {
-            let darknessAnimation = CABasicAnimation(keyPath: "backgroundColor")
-            darknessAnimation.fromValue = fromColor
-            darknessAnimation.toValue = toColor
-            
-            overlay.contentView?.layer?.add(darknessAnimation, forKey: "darkness")
-            overlay.contentView?.layer?.backgroundColor = toColor
+            (overlay.contentView as? OverlayView)?.setDarkness(darkness: darkness, animated: true, duration: animationSpeed)
         }
     }
     
