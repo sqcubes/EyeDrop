@@ -24,6 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         previewOverlayController.windowLevel = .mainMenuWindow
         previewOverlayController.hideLogo = false
         previewOverlayController.animationSpeed = 0.3
+        previewOverlayController.blur = eyeDropController.blur
         
         eyeDropController.start()
         statusMenuController.show(currentState: eyeDropController.state)
@@ -37,6 +38,7 @@ extension AppDelegate: EyeDropStatusMenuControllerDelegate {
         statusMenuController.update(forState: eyeDropController.state)
         statusMenuController.update(forInterval: eyeDropController.interval)
         statusMenuController.update(forDarknessOption: eyeDropController.darkness)
+        statusMenuController.update(forBlurEnabled: eyeDropController.blur)
     }
     
     func menuPauseIntervalTapped() {
@@ -55,6 +57,11 @@ extension AppDelegate: EyeDropStatusMenuControllerDelegate {
         eyeDropController.darkness = darknessOption
     }
     
+    func menuToggleBlurTapped() {
+        eyeDropController.blur = !eyeDropController.blur
+        previewOverlayController.blur = eyeDropController.blur
+    }
+    
     func menuQuitApplicationTapped() {
         NSApplication.shared().terminate(nil)
     }
@@ -69,6 +76,9 @@ extension AppDelegate: EyeDropControllerDelegate {
     }
     func eyeDropController(eyeDrop: EyeDropController, didUpdateDarkness darkness: DarknessOption) {
         statusMenuController.update(forDarknessOption: darkness)
+    }
+    func eyeDropController(eyeDrop: EyeDropController, didUpdateBlurEnabled blurEnabled: Bool) {
+        statusMenuController.update(forBlurEnabled: blurEnabled)
     }
     func menuHighlightsDarknessOption(darknessOption: DarknessOption?) {
         if let darknessOption = darknessOption {

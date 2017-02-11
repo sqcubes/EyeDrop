@@ -4,6 +4,7 @@ public enum AppSettings: Int, Hashable {
     case interval
     case otherSetting
     case darknessOption
+    case blurEnabled
     
     private static var defaults: UserDefaults { return UserDefaults.standard }
     private var defaults: UserDefaults { return AppSettings.defaults }
@@ -13,6 +14,7 @@ public enum AppSettings: Int, Hashable {
         case .interval: return "minutesInterval"
         case .otherSetting: return "otherSetting"
         case .darknessOption: return "darknessOption"
+        case .blurEnabled: return "blurEnabled"
         }
     }
     
@@ -21,6 +23,7 @@ public enum AppSettings: Int, Hashable {
         case .interval: return TimeInterval(20 * 60)
         case .otherSetting: return nil
         case .darknessOption: return DarknessOption.Medium.rawValue
+        case .blurEnabled: return true
         }
     }
     

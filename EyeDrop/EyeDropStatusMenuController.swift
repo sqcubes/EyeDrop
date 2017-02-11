@@ -15,6 +15,7 @@ protocol EyeDropStatusMenuControllerDelegate {
     func menuChangeIntervalTapped(interval: TimeInterval)
     func menuChangeDarknessOptionTapped(darknessOption: DarknessOption)
     func menuHighlightsDarknessOption(darknessOption: DarknessOption?)
+    func menuToggleBlurTapped()
     func menuQuitApplicationTapped()
     func menuShouldUpdateState()
 }
@@ -24,6 +25,7 @@ private enum MenuItemTags: Int {
     case IntervalItem
     case DarknessMenu
     case DarknessMenuOption
+    case DarknessMenuBlur
     
     var tag: Int { return rawValue }
 }
@@ -131,7 +133,7 @@ class EyeDropStatusMenuController: NSObject {
         menu.addItem(NSMenuItem.separator())
         
         // Darkness options submenu
-        let darknessMenuTitle = NSLocalizedString("Darkness", tableName: "menu", comment: "The menu item tile which contains a submenu with gradations of darkness")
+        let darknessMenuTitle = NSLocalizedString("Darkness", tableName: "menu", comment: "The menu item title which contains a submenu with gradations of darkness")
         let darknessMenuItem = NSMenuItem(title: darknessMenuTitle, action: nil, keyEquivalent: "T")
         darknessMenuItem.submenu = darknessMenu
         darknessMenuItem.target = self
@@ -161,6 +163,17 @@ class EyeDropStatusMenuController: NSObject {
             item.target = self
             item.tag = MenuItemTags.DarknessMenuOption.tag
             menu.addItem(item)
+        }
+        
+        if OverlayView.isBackgroundBlurSupported {
+            // -- separator
+            menu.addItem(NSMenuItem.separator())
+            
+            // Blur
+            let toggleBlurItem = NSMenuItem(title: NSLocalizedString("Blur", tableName: "menu", comment: "The menu item that indicates whether or not blur is enabled"), action: #selector(toggleBlurTapped(sender:)), keyEquivalent: "")
+            toggleBlurItem.tag = MenuItemTags.DarknessMenuBlur.tag
+            toggleBlurItem.target = self
+            menu.addItem(toggleBlurItem)
         }
     }
     
@@ -207,6 +220,10 @@ class EyeDropStatusMenuController: NSObject {
         selectMenuItem(menu: darknessMenu, itemTag: .DarknessMenuOption, matchingValue: darknessOption)
     }
     
+    func update(forBlurEnabled blurEnabled: Bool) {
+        selectMenuItem(menu: darknessMenu, itemTag: .DarknessMenuBlur, selected: blurEnabled)
+    }
+    
     func update(forInterval interval: TimeInterval) {
         selectMenuItem(menu: normalMenu, itemTag: .IntervalItem, matchingValue: interval)
     }
@@ -216,6 +233,14 @@ class EyeDropStatusMenuController: NSObject {
             if items.tag == itemTag.tag {
                 guard let itemValue = items.representedObject as? T else { continue }
                 items.state = itemValue == value ? NSOnState : NSOffState
+            }
+        }
+    }
+    
+    private func selectMenuItem(menu: NSMenu, itemTag: MenuItemTags, selected: Bool) {
+        for items in menu.items {
+            if items.tag == itemTag.tag {
+                items.state = selected ? NSOnState : NSOffState
             }
         }
     }
@@ -246,6 +271,11 @@ class EyeDropStatusMenuController: NSObject {
     }
     
     @objc
+    private func toggleBlurTapped(sender: AnyObject) {
+        delegate?.menuToggleBlurTapped()
+    }
+    
+    @objc
     private func changeIntervalTapped(sender: AnyObject) {
         if let item = sender as? NSMenuItem, let interval = item.representedObject as? TimeInterval {
             delegate?.menuChangeIntervalTapped(interval: interval)
@@ -262,6 +292,7 @@ class EyeDropStatusMenuController: NSObject {
         delegate?.menuPauseIntervalTapped()
     }
     
+    
     @objc
     private func quitApplicationTapped(sender: AnyObject) {
         delegate?.menuQuitApplicationTapped()
@@ -275,6 +306,13 @@ extension EyeDropStatusMenuController: NSMenuDelegate {
         if menu == normalMenu {
             delegate?.menuShouldUpdateState()
         }
+    }
+    
+    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.tag == MenuItemTags.DarknessMenuBlur.tag {
+            return OverlayView.isBlurAvailable
+        }
+        return true
     }
     
     func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {

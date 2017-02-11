@@ -85,31 +85,21 @@ class OverlayView: NSView {
     }
     
     private func addBlurViewIfNeeded() {
-        if blurView?.superview != nil {
-            return // already added
-        }
+        // return when blur is unavailable or already added
+        guard #available(OSX 10.10, *), OverlayView.isBlurAvailable, blurView?.superview == nil else { return }
+    
+        let visualEffectsView = NSVisualEffectView()
+        visualEffectsView.translatesAutoresizingMaskIntoConstraints = false
+        visualEffectsView.material = NSVisualEffectMaterial.dark
+        visualEffectsView.blendingMode = NSVisualEffectBlendingMode.behindWindow
+        visualEffectsView.state = NSVisualEffectState.active
         
-        if #available(OSX 10.10, *) {
-            if NSWorkspace.shared().accessibilityDisplayShouldReduceTransparency {
-                // blur won't be visible due to accessibility options
-                // don't add a blur view as this will cause the view to become opaque
-                // which we don't want when the darkness != .high
-                return
-            }
-            
-            let visualEffectsView = NSVisualEffectView()
-            visualEffectsView.translatesAutoresizingMaskIntoConstraints = false
-            visualEffectsView.material = NSVisualEffectMaterial.dark
-            visualEffectsView.blendingMode = NSVisualEffectBlendingMode.behindWindow
-            visualEffectsView.state = NSVisualEffectState.active
-            
-            addSubview(visualEffectsView, positioned: NSWindowOrderingMode.below, relativeTo: subviews.first)
-            let views = ["blur": visualEffectsView]
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[blur]-0-|", options: [], metrics: nil, views: views))
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[blur]-0-|", options: [], metrics: nil, views: views))
-            
-            self.blurView = visualEffectsView
-        }
+        addSubview(visualEffectsView, positioned: NSWindowOrderingMode.below, relativeTo: subviews.first)
+        let views = ["blur": visualEffectsView]
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[blur]-0-|", options: [], metrics: nil, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[blur]-0-|", options: [], metrics: nil, views: views))
+        
+        self.blurView = visualEffectsView
     }
     
     /***
@@ -117,9 +107,7 @@ class OverlayView: NSView {
      is applied on top of the blur view in case blur is available and used
      */
     private func addDarknessViewIfNeeded() {
-        if darknessView.superview != nil {
-            return // already added
-        }
+        guard darknessView.superview == nil else { return }
         
         let views = ["backgroundView": darknessView]
         darknessView.translatesAutoresizingMaskIntoConstraints = false
@@ -130,21 +118,17 @@ class OverlayView: NSView {
     }
     
     private func addLogoViewIfNeeded() {
-        if logoImageView.superview != nil {
-            return // already added
-        }
+        guard let logoImage = NSImage(named: "Watermark"), logoImageView.superview == nil else { return }
         
-        if let logoImage = NSImage(named: "Watermark") {
-            logoImageView.image = logoImage
-            logoImageView.alphaValue = 0.1
-            logoImageView.frame = CGRect(x: 0, y: 0, width: logoImage.size.width, height: logoImage.size.height)
-            logoImageView.translatesAutoresizingMaskIntoConstraints = false
-            
-            addSubview(logoImageView, positioned: .above, relativeTo: darknessView)
-            let views = ["logo": logoImageView]
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[logo]-25-|", options: [], metrics: nil, views: views))
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[logo]-20-|", options: [], metrics: nil, views: views))
-        }
+        logoImageView.image = logoImage
+        logoImageView.alphaValue = 0.1
+        logoImageView.frame = CGRect(x: 0, y: 0, width: logoImage.size.width, height: logoImage.size.height)
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(logoImageView, positioned: .above, relativeTo: darknessView)
+        let views = ["logo": logoImageView]
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[logo]-25-|", options: [], metrics: nil, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[logo]-20-|", options: [], metrics: nil, views: views))
     }
     
     override func mouseUp(with event: NSEvent) {
@@ -152,6 +136,24 @@ class OverlayView: NSView {
         if event.clickCount == 2 {
             delegate?.overlayViewClicked(overlayView: self)
         }
+    }
+    
+    /**
+     Determines whether or not the current platform supports background blur. it basically
+     checks if the operating system is macOS Yosemite (10.10) or higher
+     */
+    static var isBackgroundBlurSupported: Bool {
+        guard #available(OSX 10.10, *) else { return false }
+        return true
+    }
+    
+    /**
+     Determines whether or not the background blur is available. The feature is not available on 
+     macOS =<10.9 or when user activated the 'Reduce transparency' Accessibility option.
+     */
+    static var isBlurAvailable: Bool {
+        guard #available(OSX 10.10, *) else { return false }
+        return !NSWorkspace.shared().accessibilityDisplayShouldReduceTransparency
     }
 }
 

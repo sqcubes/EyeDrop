@@ -13,6 +13,7 @@ protocol EyeDropControllerDelegate {
     func eyeDropController(eyeDrop: EyeDropController, didUpdateState state: EyeDropState)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateInterval interval: TimeInterval)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateDarkness darkness: DarknessOption)
+    func eyeDropController(eyeDrop: EyeDropController, didUpdateBlurEnabled blurEnabled: Bool)
 
 }
 
@@ -39,7 +40,7 @@ class EyeDropController {
         get { return TimeInterval(AppSettings.interval.integer) }
         set {
             let changed = interval != newValue
-            if (changed) {
+            if changed {
                 AppSettings.interval.set(newValue)
                 resetInterval(to: interval)
                 delegate?.eyeDropController(eyeDrop: self, didUpdateInterval: newValue)
@@ -51,9 +52,21 @@ class EyeDropController {
         get { return DarknessOption(rawValue: AppSettings.darknessOption.integer) ?? .Medium }
         set {
             let changed = darkness != newValue
-            if (changed) {
+            if changed {
                 AppSettings.darknessOption.set(newValue.rawValue)
                 delegate?.eyeDropController(eyeDrop: self, didUpdateDarkness: newValue)
+            }
+        }
+    }
+    
+    var blur: Bool {
+        get { return AppSettings.blurEnabled.bool }
+        set {
+            let changed = blur != newValue
+            if changed {
+                AppSettings.blurEnabled.set(newValue)
+                delegate?.eyeDropController(eyeDrop: self, didUpdateBlurEnabled: newValue)
+                overlayController.blur = newValue
             }
         }
     }
