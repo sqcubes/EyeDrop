@@ -8,11 +8,14 @@
 
 import Foundation
 import Cocoa
+import ServiceManagement
 
 protocol EyeDropControllerDelegate {
     func eyeDropController(eyeDrop: EyeDropController, didUpdateState state: EyeDropState)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateInterval interval: TimeInterval)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateDarkness darkness: DarknessOption)
+    func eyeDropController(eyeDrop: EyeDropController, didUpdateBlurEnabled blurEnabled: Bool)
+    func eyeDropController(eyeDrop: EyeDropController, didUpdateRunAtLogin runAtLogin: Bool)
 
 }
 
@@ -39,7 +42,7 @@ class EyeDropController {
         get { return TimeInterval(AppSettings.interval.integer) }
         set {
             let changed = interval != newValue
-            if (changed) {
+            if changed {
                 AppSettings.interval.set(newValue)
                 resetInterval(to: interval)
                 delegate?.eyeDropController(eyeDrop: self, didUpdateInterval: newValue)
@@ -51,9 +54,33 @@ class EyeDropController {
         get { return DarknessOption(rawValue: AppSettings.darknessOption.integer) ?? .Medium }
         set {
             let changed = darkness != newValue
-            if (changed) {
+            if changed {
                 AppSettings.darknessOption.set(newValue.rawValue)
                 delegate?.eyeDropController(eyeDrop: self, didUpdateDarkness: newValue)
+            }
+        }
+    }
+    
+    var blur: Bool {
+        get { return AppSettings.blurEnabled.bool }
+        set {
+            let changed = blur != newValue
+            if changed {
+                AppSettings.blurEnabled.set(newValue)
+                delegate?.eyeDropController(eyeDrop: self, didUpdateBlurEnabled: newValue)
+                overlayController.blur = newValue
+            }
+        }
+    }
+    
+    var runAfterLogin: Bool {
+        get { return AppSettings.runAfterLogin.bool }
+        set {
+            let changed = runAfterLogin != newValue
+            if changed {
+                AppSettings.runAfterLogin.set(newValue)
+                SMLoginItemSetEnabled(Bundle.main.bundleIdentifier as! CFString, newValue)
+                delegate?.eyeDropController(eyeDrop: self, didUpdateRunAtLogin: newValue)
             }
         }
     }
@@ -67,6 +94,8 @@ class EyeDropController {
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(screensDidWake), name: NSNotification.Name.NSWorkspaceScreensDidWake, object: nil)
         
         Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(checkScreenLockState), userInfo: nil, repeats: true)
+        
+        SMLoginItemSetEnabled(Bundle.main.bundleIdentifier as! CFString, AppSettings.runAfterLogin.bool)
         
         // begin interval
         resetInterval()
