@@ -19,3 +19,8 @@
 /* 'Resume' the interval */
 "Resume" = "Resumir";
 
+/* Run after Login */
+"Run after Login" = "Run after Login";
+
+/* Blur */
+"Blur" = "Blur";

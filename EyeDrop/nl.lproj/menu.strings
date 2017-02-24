@@ -19,3 +19,8 @@
 /* 'Resume' the interval */
 "Resume" = "Hervatten";
 
+/* Run after Login */
+"Run after Login" = "Starten na inloggen";
+
+/* Blur */
+"Blur" = "Blur";
