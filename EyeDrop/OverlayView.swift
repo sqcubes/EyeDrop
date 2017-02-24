@@ -30,11 +30,20 @@ class OverlayView: NSView {
     var delegate: OverlayViewDelegate?
     private var blurView: NSView?
     private let darknessView = NSView()
+    private let progressView = NSView()
     private let logoImageView = NSImageView()
+    
+    private var progressViewZeroWidthConstraint: NSLayoutConstraint?
     
     var hideLogo: Bool = false {
         didSet {
             logoImageView.isHidden = hideLogo
+        }
+    }
+    
+    var hideProgress: Bool = false {
+        didSet {
+            progressView.isHidden = hideProgress
         }
     }
     
@@ -61,6 +70,7 @@ class OverlayView: NSView {
         
         addDarknessViewIfNeeded()
         addLogoViewIfNeeded()
+        addProgressBarIfNeeded()
         
         // apply default darkness
         setDarkness(darkness: darkness, animated: false)
@@ -82,6 +92,16 @@ class OverlayView: NSView {
         }
         
         self.darkness = darkness
+    }
+    
+    func beginProgress(duration: TimeInterval) {
+        NSAnimationContext.runAnimationGroup({ [weak self] (context) -> Void in
+            context.duration = duration
+            context.allowsImplicitAnimation = true
+            context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+            self?.progressViewZeroWidthConstraint?.priority = 750
+            self?.layoutSubtreeIfNeeded()
+        }, completionHandler: nil)
     }
     
     private func addBlurViewIfNeeded() {
@@ -129,6 +149,29 @@ class OverlayView: NSView {
         let views = ["logo": logoImageView]
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[logo]-25-|", options: [], metrics: nil, views: views))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[logo]-20-|", options: [], metrics: nil, views: views))
+    }
+    
+    private func addProgressBarIfNeeded() {
+        guard progressView.superview == nil else { return }
+        
+        progressView.wantsLayer = true
+        progressView.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.6).cgColor
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(progressView, positioned: .above, relativeTo: darknessView)
+        
+        let views = ["progressView": progressView]
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[progressView]", options: [], metrics: nil, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[progressView(2)]", options: [], metrics: nil, views: views))
+        
+        let fullWidthConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
+        fullWidthConstraint.priority = 500
+        let zeroWidthConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 0)
+        zeroWidthConstraint.priority = 250
+        
+        self.progressViewZeroWidthConstraint = zeroWidthConstraint
+        
+        addConstraints([fullWidthConstraint, zeroWidthConstraint])
     }
     
     override func mouseUp(with event: NSEvent) {

@@ -14,6 +14,7 @@ class OverlayController {
     var isDisplayingOverlay: Bool = false
     var animationSpeed: TimeInterval = 1.0
     var hideLogo: Bool = false
+    var hideProgress: Bool = false
     var blur: Bool = true
     var windowLevel: CGWindowLevelKey = .maximumWindow
     
@@ -33,6 +34,7 @@ class OverlayController {
             let overlayView = OverlayView(delegate: self)
             overlayView.hideLogo = hideLogo
             overlayView.blur = blur
+            overlayView.hideProgress = hideProgress
             overlayView.darkness = darkness
             overlayWindow.contentView = overlayView
         
@@ -69,6 +71,11 @@ class OverlayController {
         }, completionHandler: {
             // schedule timer for removing the overlays after timeout
             Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(self.overlayDisplayTimeOut(timer:)), userInfo: nil, repeats: false)
+            
+            // begin progress bar
+            overlays.forEach {
+                ($0.contentView as? OverlayView)?.beginProgress(duration: duration)
+            }
         })
     }
     

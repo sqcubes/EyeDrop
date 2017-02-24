@@ -23,6 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         previewOverlayController.windowLevel = .mainMenuWindow
         previewOverlayController.hideLogo = false
+        previewOverlayController.hideProgress = true
         previewOverlayController.animationSpeed = 0.3
         previewOverlayController.blur = eyeDropController.blur
         
