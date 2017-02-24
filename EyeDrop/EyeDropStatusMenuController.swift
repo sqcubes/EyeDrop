@@ -17,6 +17,7 @@ protocol EyeDropStatusMenuControllerDelegate {
     func menuHighlightsDarknessOption(darknessOption: DarknessOption?)
     func menuToggleBlurTapped()
     func menuQuitApplicationTapped()
+    func menuRunAfterLoginTapped()
     func menuShouldUpdateState()
 }
 
@@ -26,6 +27,7 @@ private enum MenuItemTags: Int {
     case DarknessMenu
     case DarknessMenuOption
     case DarknessMenuBlur
+    case RunAfterLogin
     
     var tag: Int { return rawValue }
 }
@@ -140,6 +142,12 @@ class EyeDropStatusMenuController: NSObject {
         darknessMenuItem.tag = MenuItemTags.DarknessMenu.tag
         menu.addItem(darknessMenuItem)
         
+        // -- Run after Login
+        let runAfterLoginItem = NSMenuItem(title: NSLocalizedString("Run after Login", tableName: "menu", comment: ""), action: #selector(runAfterLoginTapped(sender:)), keyEquivalent: "p")
+        runAfterLoginItem.target = self
+        runAfterLoginItem.tag = MenuItemTags.RunAfterLogin.tag
+        menu.addItem(runAfterLoginItem)
+        
         // -- separator
         menu.addItem(NSMenuItem.separator())
         
@@ -224,6 +232,10 @@ class EyeDropStatusMenuController: NSObject {
         selectMenuItem(menu: darknessMenu, itemTag: .DarknessMenuBlur, selected: blurEnabled)
     }
     
+    func update(forRunAfterLogin runAfterLogin: Bool) {
+        selectMenuItem(menu: normalMenu, itemTag: .RunAfterLogin, selected: runAfterLogin)
+    }
+    
     func update(forInterval interval: TimeInterval) {
         selectMenuItem(menu: normalMenu, itemTag: .IntervalItem, matchingValue: interval)
     }
@@ -292,6 +304,10 @@ class EyeDropStatusMenuController: NSObject {
         delegate?.menuPauseIntervalTapped()
     }
     
+    @objc
+    private func runAfterLoginTapped(sender: AnyObject) {
+        delegate?.menuRunAfterLoginTapped()
+    }
     
     @objc
     private func quitApplicationTapped(sender: AnyObject) {

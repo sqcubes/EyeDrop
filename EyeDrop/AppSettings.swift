@@ -5,6 +5,7 @@ public enum AppSettings: Int, Hashable {
     case otherSetting
     case darknessOption
     case blurEnabled
+    case runAfterLogin
     
     private static var defaults: UserDefaults { return UserDefaults.standard }
     private var defaults: UserDefaults { return AppSettings.defaults }
@@ -15,6 +16,7 @@ public enum AppSettings: Int, Hashable {
         case .otherSetting: return "otherSetting"
         case .darknessOption: return "darknessOption"
         case .blurEnabled: return "blurEnabled"
+        case .runAfterLogin: return "runAfterLogin"
         }
     }
     
@@ -24,6 +26,7 @@ public enum AppSettings: Int, Hashable {
         case .otherSetting: return nil
         case .darknessOption: return DarknessOption.Low.rawValue
         case .blurEnabled: return true
+        case .runAfterLogin: return true
         }
     }
     

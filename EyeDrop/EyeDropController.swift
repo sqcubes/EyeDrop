@@ -8,12 +8,14 @@
 
 import Foundation
 import Cocoa
+import ServiceManagement
 
 protocol EyeDropControllerDelegate {
     func eyeDropController(eyeDrop: EyeDropController, didUpdateState state: EyeDropState)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateInterval interval: TimeInterval)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateDarkness darkness: DarknessOption)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateBlurEnabled blurEnabled: Bool)
+    func eyeDropController(eyeDrop: EyeDropController, didUpdateRunAtLogin runAtLogin: Bool)
 
 }
 
@@ -71,6 +73,18 @@ class EyeDropController {
         }
     }
     
+    var runAfterLogin: Bool {
+        get { return AppSettings.runAfterLogin.bool }
+        set {
+            let changed = runAfterLogin != newValue
+            if changed {
+                AppSettings.runAfterLogin.set(newValue)
+                SMLoginItemSetEnabled(Bundle.main.bundleIdentifier as! CFString, newValue)
+                delegate?.eyeDropController(eyeDrop: self, didUpdateRunAtLogin: newValue)
+            }
+        }
+    }
+    
     func start() {
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(workspaceWillSleep), name: NSNotification.Name.NSWorkspaceWillSleep, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(workspaceDidWake), name: NSNotification.Name.NSWorkspaceDidWake, object: nil)
@@ -80,6 +94,8 @@ class EyeDropController {
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(screensDidWake), name: NSNotification.Name.NSWorkspaceScreensDidWake, object: nil)
         
         Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(checkScreenLockState), userInfo: nil, repeats: true)
+        
+        SMLoginItemSetEnabled(Bundle.main.bundleIdentifier as! CFString, AppSettings.runAfterLogin.bool)
         
         // begin interval
         resetInterval()
