@@ -22,7 +22,7 @@ public enum AppSettings: Int, Hashable {
         switch self {
         case .interval: return TimeInterval(20 * 60)
         case .otherSetting: return nil
-        case .darknessOption: return DarknessOption.Medium.rawValue
+        case .darknessOption: return DarknessOption.Low.rawValue
         case .blurEnabled: return true
         }
     }
