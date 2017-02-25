@@ -143,7 +143,7 @@ class EyeDropStatusMenuController: NSObject {
         menu.addItem(darknessMenuItem)
         
         // -- Run after Login
-        let runAfterLoginItem = NSMenuItem(title: NSLocalizedString("Run after Login", tableName: "menu", comment: ""), action: #selector(runAfterLoginTapped(sender:)), keyEquivalent: "p")
+        let runAfterLoginItem = NSMenuItem(title: NSLocalizedString("Run after Login", tableName: "menu", comment: ""), action: #selector(runAfterLoginTapped(sender:)), keyEquivalent: "")
         runAfterLoginItem.target = self
         runAfterLoginItem.tag = MenuItemTags.RunAfterLogin.tag
         menu.addItem(runAfterLoginItem)
