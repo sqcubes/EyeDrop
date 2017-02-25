@@ -26,7 +26,7 @@ public enum AppSettings: Int, Hashable {
         case .otherSetting: return nil
         case .darknessOption: return DarknessOption.Low.rawValue
         case .blurEnabled: return true
-        case .runAfterLogin: return true
+        case .runAfterLogin: return false
         }
     }
     
