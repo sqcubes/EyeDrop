@@ -78,11 +78,9 @@ class EyeDropController {
         set {
             let changed = runAfterLogin != newValue
             if changed {
-                let enabled = SMLoginItemSetEnabled(Bundle.main.bundleIdentifier as! CFString, newValue)
-                if enabled {
-                    AppSettings.runAfterLogin.set(newValue)
-                    delegate?.eyeDropController(eyeDrop: self, didUpdateRunAtLogin: newValue)
-                }
+                AppSettings.runAfterLogin.set(newValue)
+                SMLoginItemSetEnabled(Bundle.main.bundleIdentifier as! CFString, newValue)
+                delegate?.eyeDropController(eyeDrop: self, didUpdateRunAtLogin: newValue)
             }
         }
     }
