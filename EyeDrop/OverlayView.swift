@@ -161,17 +161,17 @@ class OverlayView: NSView {
         addSubview(progressView, positioned: .above, relativeTo: darknessView)
         
         let views = ["progressView": progressView]
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[progressView]", options: [], metrics: nil, views: views))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[progressView(2)]", options: [], metrics: nil, views: views))
         
         let fullWidthConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
         fullWidthConstraint.priority = 500
         let zeroWidthConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 0)
         zeroWidthConstraint.priority = 250
+        let centerHorizontallyConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0.0)
         
         self.progressViewZeroWidthConstraint = zeroWidthConstraint
         
-        addConstraints([fullWidthConstraint, zeroWidthConstraint])
+        addConstraints([centerHorizontallyConstraint, fullWidthConstraint, zeroWidthConstraint])
     }
     
     override func mouseUp(with event: NSEvent) {
