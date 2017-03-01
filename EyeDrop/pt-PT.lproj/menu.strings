@@ -20,7 +20,7 @@
 "Resume" = "Resumir";
 
 /* Run after Login */
-"Run after Login" = "Run after Login";
+"Run after Login" = "Executar após iniciar";
 
 /* Blur */
-"Blur" = "Blur";
+"Blur" = "Desfocar";
