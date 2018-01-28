@@ -131,6 +131,7 @@ class OverlayView: NSView {
         
         let views = ["backgroundView": darknessView]
         darknessView.translatesAutoresizingMaskIntoConstraints = false
+        darknessView.wantsLayer = true
         
         addSubview(darknessView, positioned: .above, relativeTo: blurView)
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[backgroundView]-0-|", options: [], metrics: nil, views: views))
