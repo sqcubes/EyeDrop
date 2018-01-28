@@ -79,26 +79,27 @@ class EyeDropController {
             let changed = runAfterLogin != newValue
             if changed {
                 AppSettings.runAfterLogin.set(newValue)
-                SMLoginItemSetEnabled(Bundle.main.bundleIdentifier as! CFString, newValue)
+                SMLoginItemSetEnabled(Bundle.main.bundleIdentifier! as CFString, newValue)
                 delegate?.eyeDropController(eyeDrop: self, didUpdateRunAtLogin: newValue)
             }
         }
     }
     
     func start() {
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(workspaceWillSleep), name: NSNotification.Name.NSWorkspaceWillSleep, object: nil)
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(workspaceDidWake), name: NSNotification.Name.NSWorkspaceDidWake, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(workspaceWillSleep), name: NSWorkspace.willSleepNotification, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(workspaceDidWake), name: NSWorkspace.didWakeNotification, object: nil)
         
         
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(screensDidSleep), name: NSNotification.Name.NSWorkspaceScreensDidSleep, object: nil)
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(screensDidWake), name: NSNotification.Name.NSWorkspaceScreensDidWake, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(screensDidSleep), name: NSWorkspace.screensDidSleepNotification, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(screensDidWake), name: NSWorkspace.screensDidWakeNotification, object: nil)
         
         Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(checkScreenLockState), userInfo: nil, repeats: true)
         
-        SMLoginItemSetEnabled(Bundle.main.bundleIdentifier as! CFString, AppSettings.runAfterLogin.bool)
+        SMLoginItemSetEnabled(Bundle.main.bundleIdentifier! as CFString, AppSettings.runAfterLogin.bool)
         
         // begin interval
         resetInterval()
+        resetInterval(to: interval, initialInterval: 3)
     }
     
     @objc
@@ -122,7 +123,7 @@ class EyeDropController {
     }
     
     private func isScreenLocked() -> Bool {
-        let dict = CGSessionCopyCurrentDictionary() as? NSDictionary
+        let dict: NSDictionary? = CGSessionCopyCurrentDictionary()!
         return dict?["CGS" + "Session" + "Screen" + "Is" + "Locked"] as? Bool ?? false
     }
     

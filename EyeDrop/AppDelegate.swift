@@ -65,7 +65,7 @@ extension AppDelegate: EyeDropStatusMenuControllerDelegate {
     }
     
     func menuQuitApplicationTapped() {
-        NSApplication.shared().terminate(nil)
+        NSApplication.shared.terminate(nil)
     }
     
     func menuRunAfterLoginTapped() {

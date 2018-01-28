@@ -19,16 +19,16 @@ class OverlayController {
     var windowLevel: CGWindowLevelKey = .maximumWindow
     
     private func createOverlays(darkness: DarknessOption) -> [NSWindow] {
-        let screens = NSScreen.screens() ?? []
+        let screens = NSScreen.screens
         var overlays = [NSWindow]()
         
         for i in 0..<screens.count {
             let frame = screens[i].frame
-            let overlayWindow = NSWindow(contentRect: frame, styleMask: NSWindowStyleMask.borderless, backing: NSBackingStoreType.buffered, defer: false)
+            let overlayWindow = NSWindow(contentRect: frame, styleMask: NSWindow.StyleMask.borderless, backing: NSWindow.BackingStoreType.buffered, defer: false)
             overlayWindow.isOpaque = false
             overlayWindow.hasShadow = false
             overlayWindow.isReleasedWhenClosed = false
-            overlayWindow.level = Int(CGWindowLevelForKey(windowLevel))
+            overlayWindow.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(windowLevel)))
             overlayWindow.backgroundColor = NSColor.clear
             
             let overlayView = OverlayView(delegate: self)

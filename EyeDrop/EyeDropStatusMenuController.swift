@@ -45,10 +45,10 @@ fileprivate extension EyeDropState {
             // using image assets not possible / working under 10.9
             // therefore falling back to fixed images
             switch self {
-            case .Active: return NSImage(named: "eyedrop_active")!
-            case .Delayed: return NSImage(named: "eyedrop_delayed")!
-            case .Normal: return NSImage(named: "eyedrop_normal")!
-            case .Paused: return NSImage(named: "eyedrop_pause")!
+            case .Active: return NSImage(named: NSImage.Name(rawValue: "eyedrop_active"))!
+            case .Delayed: return NSImage(named: NSImage.Name(rawValue: "eyedrop_delayed"))!
+            case .Normal: return NSImage(named: NSImage.Name(rawValue: "eyedrop_normal"))!
+            case .Paused: return NSImage(named: NSImage.Name(rawValue: "eyedrop_pause"))!
             }
         }
     }
@@ -95,7 +95,7 @@ class EyeDropStatusMenuController: NSObject {
     
     func show(currentState: EyeDropState) {
         // create status bar item
-        statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         statusItem!.highlightMode = true
         statusItem!.menu = normalMenu
         
@@ -244,7 +244,7 @@ class EyeDropStatusMenuController: NSObject {
         for items in menu.items {
             if items.tag == itemTag.tag {
                 guard let itemValue = items.representedObject as? T else { continue }
-                items.state = itemValue == value ? NSOnState : NSOffState
+                items.state = itemValue == value ? NSControl.StateValue.on : NSControl.StateValue.off
             }
         }
     }
@@ -252,7 +252,7 @@ class EyeDropStatusMenuController: NSObject {
     private func selectMenuItem(menu: NSMenu, itemTag: MenuItemTags, selected: Bool) {
         for items in menu.items {
             if items.tag == itemTag.tag {
-                items.state = selected ? NSOnState : NSOffState
+                items.state = selected ? NSControl.StateValue.on : NSControl.StateValue.off
             }
         }
     }
