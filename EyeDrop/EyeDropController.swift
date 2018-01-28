@@ -16,7 +16,8 @@ protocol EyeDropControllerDelegate {
     func eyeDropController(eyeDrop: EyeDropController, didUpdateDarkness darkness: DarknessOption)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateBlurEnabled blurEnabled: Bool)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateRunAtLogin runAtLogin: Bool)
-
+    func eyeDropController(eyeDrop: EyeDropController, didUpdateCancelable cancelable: Bool)
+    
 }
 
 class EyeDropController {
@@ -85,10 +86,20 @@ class EyeDropController {
         }
     }
     
+    var cancelable: Bool {
+        get { return AppSettings.cancelable.bool }
+        set {
+            let changed = cancelable != newValue
+            if changed {
+                AppSettings.cancelable.set(newValue)
+                delegate?.eyeDropController(eyeDrop: self, didUpdateCancelable: newValue)
+            }
+        }
+    }
+    
     func start() {
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(workspaceWillSleep), name: NSWorkspace.willSleepNotification, object: nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(workspaceDidWake), name: NSWorkspace.didWakeNotification, object: nil)
-        
         
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(screensDidSleep), name: NSWorkspace.screensDidSleepNotification, object: nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(screensDidWake), name: NSWorkspace.screensDidWakeNotification, object: nil)
@@ -99,6 +110,7 @@ class EyeDropController {
         
         // begin interval
         resetInterval()
+        
         resetInterval(to: interval, initialInterval: 3)
     }
     
@@ -110,7 +122,8 @@ class EyeDropController {
         overlayController.show(duration: timeout, darkness: darkness)
     }
     
-    @objc private func checkScreenLockState() {
+    @objc
+    private func checkScreenLockState() {
         let screenIsLocked = isScreenLocked()
         if previousScreenIsLocked != screenIsLocked {
             previousScreenIsLocked = screenIsLocked
@@ -123,7 +136,7 @@ class EyeDropController {
     }
     
     private func isScreenLocked() -> Bool {
-        let dict: NSDictionary? = CGSessionCopyCurrentDictionary()!
+        let dict: NSDictionary? = CGSessionCopyCurrentDictionary()
         return dict?["CGS" + "Session" + "Screen" + "Is" + "Locked"] as? Bool ?? false
     }
     

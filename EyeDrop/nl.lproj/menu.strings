@@ -22,5 +22,8 @@
 /* Run after Login */
 "Run after Login" = "Starten na inloggen";
 
+/* Cancelable */
+"Cancelable" = "Annuleerbaar (ESC)";
+
 /* Blur */
 "Blur" = "Wazig";

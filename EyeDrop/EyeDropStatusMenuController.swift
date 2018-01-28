@@ -18,6 +18,7 @@ protocol EyeDropStatusMenuControllerDelegate {
     func menuToggleBlurTapped()
     func menuQuitApplicationTapped()
     func menuRunAfterLoginTapped()
+    func menuCancelableTapped()
     func menuShouldUpdateState()
 }
 
@@ -28,6 +29,7 @@ private enum MenuItemTags: Int {
     case DarknessMenuOption
     case DarknessMenuBlur
     case RunAfterLogin
+    case Cancelable
     
     var tag: Int { return rawValue }
 }
@@ -148,6 +150,12 @@ class EyeDropStatusMenuController: NSObject {
         runAfterLoginItem.tag = MenuItemTags.RunAfterLogin.tag
         menu.addItem(runAfterLoginItem)
         
+        // -- Cancelable
+        let cancelableItem = NSMenuItem(title: NSLocalizedString("Cancelable", tableName: "menu", comment: ""), action: #selector(cancelableTapped(sender:)), keyEquivalent: "")
+        cancelableItem.target = self
+        cancelableItem.tag = MenuItemTags.Cancelable.tag
+        menu.addItem(cancelableItem)
+        
         // -- separator
         menu.addItem(NSMenuItem.separator())
         
@@ -236,6 +244,10 @@ class EyeDropStatusMenuController: NSObject {
         selectMenuItem(menu: normalMenu, itemTag: .RunAfterLogin, selected: runAfterLogin)
     }
     
+    func update(forCancelable cancelable: Bool) {
+        selectMenuItem(menu: normalMenu, itemTag: .Cancelable, selected: cancelable)
+    }
+    
     func update(forInterval interval: TimeInterval) {
         selectMenuItem(menu: normalMenu, itemTag: .IntervalItem, matchingValue: interval)
     }
@@ -307,6 +319,11 @@ class EyeDropStatusMenuController: NSObject {
     @objc
     private func runAfterLoginTapped(sender: AnyObject) {
         delegate?.menuRunAfterLoginTapped()
+    }
+    
+    @objc
+    private func cancelableTapped(sender: AnyObject) {
+        delegate?.menuCancelableTapped()
     }
     
     @objc

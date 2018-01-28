@@ -22,5 +22,8 @@
 /* Run after Login */
 "Run after Login" = "Run after Login";
 
+/* Cancelable */
+"Cancelable" = "Cancelable (ESC)";
+
 /* Blur */
 "Blur" = "Blur";

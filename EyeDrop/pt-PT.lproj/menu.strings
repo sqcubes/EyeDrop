@@ -22,5 +22,8 @@
 /* Run after Login */
 "Run after Login" = "Executar após iniciar";
 
+/* Cancelable */
+"Cancelable" = "Cancelável (ESC)";
+
 /* Blur */
 "Blur" = "Desfocar";

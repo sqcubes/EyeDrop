@@ -31,6 +31,7 @@
 		DFDC50D71E38C04C0032ACE0 /* eyedrop_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50CF1E38C04C0032ACE0 /* eyedrop_normal@2x.png */; };
 		DFDC50D81E38C04C0032ACE0 /* eyedrop_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50D01E38C04C0032ACE0 /* eyedrop_pause.png */; };
 		DFDC50D91E38C04C0032ACE0 /* eyedrop_pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFDC50D11E38C04C0032ACE0 /* eyedrop_pause@2x.png */; };
+		DFFEA63D201E0841005D87DB /* BorderlessWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFEA63C201E0841005D87DB /* BorderlessWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		DFDC50CF1E38C04C0032ACE0 /* eyedrop_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eyedrop_normal@2x.png"; sourceTree = "<group>"; };
 		DFDC50D01E38C04C0032ACE0 /* eyedrop_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eyedrop_pause.png; sourceTree = "<group>"; };
 		DFDC50D11E38C04C0032ACE0 /* eyedrop_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eyedrop_pause@2x.png"; sourceTree = "<group>"; };
+		DFFEA63C201E0841005D87DB /* BorderlessWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderlessWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 				DFAF732A1E26BF7100A9469E /* Info.plist */,
 				DFAF73231E26BF7100A9469E /* AppDelegate.swift */,
 				DF7956001E26CDA50066904E /* AppSettings.swift */,
+				DFFEA63C201E0841005D87DB /* BorderlessWindow.swift */,
 				DF3AAC191E3DF1A8004E58EA /* DarknessOption.swift */,
 				DF3AAC1B1E3DF2D2004E58EA /* EyeDropController.swift */,
 				DF3AAC161E3DF13C004E58EA /* EyeDropState.swift */,
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF3AAC1E1E3E48BE004E58EA /* OverlayController.swift in Sources */,
+				DFFEA63D201E0841005D87DB /* BorderlessWindow.swift in Sources */,
 				DF3AAC151E3DEFD8004E58EA /* EyeDropStatusMenuController.swift in Sources */,
 				DF3AAC1A1E3DF1A8004E58EA /* DarknessOption.swift in Sources */,
 				DFDC50C51E3891E10032ACE0 /* OverlayView.swift in Sources */,

@@ -9,7 +9,7 @@
 import Cocoa
 
 protocol OverlayViewDelegate {
-    func overlayViewClicked(overlayView: OverlayView)
+    func overlayViewCancelled(overlayView: OverlayView)
 }
 
 extension DarknessOption {
@@ -178,8 +178,21 @@ class OverlayView: NSView {
     override func mouseUp(with event: NSEvent) {
         super.mouseUp(with: event)
         if event.clickCount == 2 {
-            delegate?.overlayViewClicked(overlayView: self)
+            delegate?.overlayViewCancelled(overlayView: self)
         }
+    }
+    
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+    
+    override func keyDown(with event: NSEvent) {
+        super.keyDown(with: event)
+        print("KeyDown")
+    }
+    
+    override func cancelOperation(_ sender: Any?) {
+        delegate?.overlayViewCancelled(overlayView: self)
     }
     
     /**

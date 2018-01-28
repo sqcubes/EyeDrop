@@ -24,9 +24,10 @@ class OverlayController {
         
         for i in 0..<screens.count {
             let frame = screens[i].frame
-            let overlayWindow = NSWindow(contentRect: frame, styleMask: NSWindow.StyleMask.borderless, backing: NSWindow.BackingStoreType.buffered, defer: false)
+            let overlayWindow = BorderlessWindow(contentRect: frame, styleMask: NSWindow.StyleMask.borderless, backing: NSWindow.BackingStoreType.buffered, defer: false)
             overlayWindow.isOpaque = false
             overlayWindow.hasShadow = false
+            overlayWindow.ignoresMouseEvents = true
             overlayWindow.isReleasedWhenClosed = false
             overlayWindow.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(windowLevel)))
             overlayWindow.backgroundColor = NSColor.clear
@@ -37,6 +38,7 @@ class OverlayController {
             overlayView.hideProgress = hideProgress
             overlayView.darkness = darkness
             overlayWindow.contentView = overlayView
+            overlayWindow.initialFirstResponder = overlayView
         
             overlays.append(overlayWindow)
         }
@@ -58,7 +60,15 @@ class OverlayController {
         // initially init overlays fully transparent
         overlays.forEach { overlay in
             overlay.alphaValue = 0
+            // move to front
             overlay.orderFrontRegardless()
+            overlay.makeKey()
+        }
+        
+        if AppSettings.cancelable.bool {
+            // when cancelable, activate the app so that the window can respond
+            // to ESC or double-clicks to cancel the appearance
+            NSApp.activate(ignoringOtherApps: true)
         }
         
         // add overlays to list of currently displayed overlays
@@ -74,6 +84,7 @@ class OverlayController {
             
             // begin progress bar
             overlays.forEach {
+                $0.ignoresMouseEvents = !AppSettings.cancelable.bool
                 ($0.contentView as? OverlayView)?.beginProgress(duration: duration)
             }
         })
@@ -105,6 +116,12 @@ class OverlayController {
         NSAnimationContext.runAnimationGroup({ (context) -> Void in
             context.duration = animationSpeed
             overlay.animator().alphaValue = 0
+            
+            // .hide (re)activates the previous application. In case EyeDrop gained focus (e.g by clicking the window)
+            NSApp.hide(nil)
+            // Since we still want to fade out the current overlay we unhide EyeDrop without activation, this way the previous remains
+            // focused during the fade out
+            NSApp.unhideWithoutActivation()
         }, completionHandler: {
             // close overay once fully faded-out
             overlay.close()
@@ -122,7 +139,7 @@ class OverlayController {
 }
 
 extension OverlayController: OverlayViewDelegate {
-    func overlayViewClicked(overlayView: OverlayView) {
+    func overlayViewCancelled(overlayView: OverlayView) {
         hide()
     }
 }

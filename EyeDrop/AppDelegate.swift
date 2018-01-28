@@ -41,6 +41,7 @@ extension AppDelegate: EyeDropStatusMenuControllerDelegate {
         statusMenuController.update(forDarknessOption: eyeDropController.darkness)
         statusMenuController.update(forBlurEnabled: eyeDropController.blur)
         statusMenuController.update(forRunAfterLogin: eyeDropController.runAfterLogin)
+        statusMenuController.update(forCancelable: eyeDropController.cancelable)
     }
     
     func menuPauseIntervalTapped() {
@@ -71,6 +72,10 @@ extension AppDelegate: EyeDropStatusMenuControllerDelegate {
     func menuRunAfterLoginTapped() {
         eyeDropController.runAfterLogin = !eyeDropController.runAfterLogin
     }
+    
+    func menuCancelableTapped() {
+        eyeDropController.cancelable = !eyeDropController.cancelable
+    }
 }
 
 extension AppDelegate: EyeDropControllerDelegate {
@@ -88,6 +93,9 @@ extension AppDelegate: EyeDropControllerDelegate {
     }
     func eyeDropController(eyeDrop: EyeDropController, didUpdateRunAtLogin runAtLogin: Bool) {
         statusMenuController.update(forRunAfterLogin: runAtLogin)
+    }
+    func eyeDropController(eyeDrop: EyeDropController, didUpdateCancelable cancelable: Bool) {
+        
     }
     func menuHighlightsDarknessOption(darknessOption: DarknessOption?) {
         if let darknessOption = darknessOption {
