@@ -17,7 +17,7 @@ protocol EyeDropControllerDelegate {
     func eyeDropController(eyeDrop: EyeDropController, didUpdateBlurEnabled blurEnabled: Bool)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateRunAtLogin runAtLogin: Bool)
     func eyeDropController(eyeDrop: EyeDropController, didUpdateCancelable cancelable: Bool)
-    
+    func eyeDropController(eyeDrop: EyeDropController, didUpdatePauseInFullScreen pauseInFullScreen: Bool)
 }
 
 class EyeDropController {
@@ -26,6 +26,7 @@ class EyeDropController {
     private var remainingIntervalUponPaused = TimeInterval(-1)
     private let overlayController = OverlayController()
     private var previousScreenIsLocked = false
+    private var pausedForFullScreenApp = false
     
     private(set) var state: EyeDropState = .Active {
         didSet{
@@ -97,7 +98,21 @@ class EyeDropController {
         }
     }
     
+    var pauseInFullScreen: Bool {
+        get { return AppSettings.pauseInFullScreen.bool }
+        set {
+            let changed = pauseInFullScreen != newValue
+            if changed {
+                AppSettings.pauseInFullScreen.set(newValue)
+                delegate?.eyeDropController(eyeDrop: self, didUpdatePauseInFullScreen: newValue)
+            }
+        }
+    }
+    
     func start() {
+        NotificationCenter.default.addObserver(self, selector: #selector(otherApplicationDidEnterFullScreen), name: FullscreenDetector.otherApplicationDidEnterFullScreen, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(otherApplicationDidLeaveFullScreen), name: FullscreenDetector.otherApplicationDidLeaveFullScreen, object: nil)
+        
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(workspaceWillSleep), name: NSWorkspace.willSleepNotification, object: nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(workspaceDidWake), name: NSWorkspace.didWakeNotification, object: nil)
         
@@ -110,8 +125,7 @@ class EyeDropController {
         
         // begin interval
         resetInterval()
-        
-        resetInterval(to: interval, initialInterval: 3)
+//        resetInterval(to: interval, initialInterval: 3)
     }
     
     @objc
@@ -119,7 +133,7 @@ class EyeDropController {
         // timeout = interval minutes as 1:1 seconds
         // example = interval = 600s, timeout = 10s
         let timeout = timer.timeInterval / 60
-        overlayController.show(duration: timeout, darkness: darkness)
+        overlayController.show(duration: timeout, darkness: darkness, activateApp: true)
     }
     
     @objc
@@ -168,6 +182,22 @@ class EyeDropController {
     @objc
     private func workspaceDidWake() {
         resumeFromSuspendedState()
+    }
+    
+    @objc
+    private func otherApplicationDidEnterFullScreen() {
+        if AppSettings.pauseInFullScreen.bool {
+            suspend()
+            pausedForFullScreenApp = true
+        }
+    }
+    
+    @objc
+    private func otherApplicationDidLeaveFullScreen() {
+        if pausedForFullScreenApp {
+            resumeFromSuspendedState()
+            pausedForFullScreenApp = false
+        }
     }
 
     

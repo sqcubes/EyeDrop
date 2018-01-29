@@ -7,6 +7,7 @@ public enum AppSettings: Int, Hashable {
     case blurEnabled
     case runAfterLogin
     case cancelable
+    case pauseInFullScreen
     
     private static var defaults: UserDefaults { return UserDefaults.standard }
     private var defaults: UserDefaults { return AppSettings.defaults }
@@ -19,6 +20,7 @@ public enum AppSettings: Int, Hashable {
         case .blurEnabled: return "blurEnabled"
         case .runAfterLogin: return "runAfterLogin"
         case .cancelable: return "cancelable"
+        case .pauseInFullScreen: return "pauseInFullScreen"
         }
     }
     
@@ -30,6 +32,7 @@ public enum AppSettings: Int, Hashable {
         case .blurEnabled: return true
         case .runAfterLogin: return false
         case .cancelable: return true
+        case .pauseInFullScreen: return true
         }
     }
     

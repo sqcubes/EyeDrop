@@ -186,11 +186,6 @@ class OverlayView: NSView {
         return true
     }
     
-    override func keyDown(with event: NSEvent) {
-        super.keyDown(with: event)
-        print("KeyDown")
-    }
-    
     override func cancelOperation(_ sender: Any?) {
         delegate?.overlayViewCancelled(overlayView: self)
     }

@@ -19,6 +19,7 @@ protocol EyeDropStatusMenuControllerDelegate {
     func menuQuitApplicationTapped()
     func menuRunAfterLoginTapped()
     func menuCancelableTapped()
+    func menuPauseInFullScreenTapped()
     func menuShouldUpdateState()
 }
 
@@ -30,6 +31,7 @@ private enum MenuItemTags: Int {
     case DarknessMenuBlur
     case RunAfterLogin
     case Cancelable
+    case PauseInFullScreen
     
     var tag: Int { return rawValue }
 }
@@ -156,6 +158,12 @@ class EyeDropStatusMenuController: NSObject {
         cancelableItem.tag = MenuItemTags.Cancelable.tag
         menu.addItem(cancelableItem)
         
+        // -- PauseInFullScreen
+        let pauseInFullScreenItem = NSMenuItem(title: NSLocalizedString("Pause in full screen", tableName: "menu", comment: ""), action: #selector(pauseInFullScreenTapped(sender:)), keyEquivalent: "")
+        pauseInFullScreenItem.target = self
+        pauseInFullScreenItem.tag = MenuItemTags.PauseInFullScreen.tag
+        menu.addItem(pauseInFullScreenItem)
+        
         // -- separator
         menu.addItem(NSMenuItem.separator())
         
@@ -248,6 +256,10 @@ class EyeDropStatusMenuController: NSObject {
         selectMenuItem(menu: normalMenu, itemTag: .Cancelable, selected: cancelable)
     }
     
+    func update(forPauseInFullScreen pauseInFullScreen: Bool) {
+        selectMenuItem(menu: normalMenu, itemTag: .PauseInFullScreen, selected: pauseInFullScreen)
+    }
+    
     func update(forInterval interval: TimeInterval) {
         selectMenuItem(menu: normalMenu, itemTag: .IntervalItem, matchingValue: interval)
     }
@@ -324,6 +336,11 @@ class EyeDropStatusMenuController: NSObject {
     @objc
     private func cancelableTapped(sender: AnyObject) {
         delegate?.menuCancelableTapped()
+    }
+    
+    @objc
+    private func pauseInFullScreenTapped(sender: AnyObject) {
+        delegate?.menuPauseInFullScreenTapped()
     }
     
     @objc
