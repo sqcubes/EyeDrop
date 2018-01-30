@@ -18,6 +18,19 @@ class OverlayController {
     var blur: Bool = true
     var windowLevel: CGWindowLevelKey = .maximumWindow
     
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive(_:)), name: NSApplication.willResignActiveNotification, object: nil)
+    }
+    
+    @objc
+    private func applicationWillResignActive(_ notification: NSNotification) {
+        if (isDisplayingOverlay) {
+            // Keep EyeDrop activated while displaying overlay, this way the screen can respond to ESC / double-clicks to dismiss
+            // and it also prevents underlaying applications from receiving accidental taps / key presses.
+            NSApp.activate(ignoringOtherApps: true)
+        }
+    }
+    
     private func createOverlays(darkness: DarknessOption) -> [NSWindow] {
         let screens = NSScreen.screens
         var overlays = [NSWindow]()
@@ -46,7 +59,15 @@ class OverlayController {
         return overlays
     }
     
-    public func show(duration: TimeInterval, darkness: DarknessOption, activateApp: Bool) {
+    public func preview(darkness: DarknessOption) {
+        show(duration: TimeInterval.infinity, darkness: darkness, activateApp: false)
+    }
+    
+    public func show(duration: TimeInterval, darkness: DarknessOption) {
+        show(duration: duration, darkness: darkness, activateApp: true)
+    }
+    
+    private func show(duration: TimeInterval, darkness: DarknessOption, activateApp: Bool) {
         if isDisplayingOverlay {
             animate(darkness: darkness)
             return

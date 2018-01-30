@@ -133,7 +133,7 @@ class EyeDropController {
         // timeout = interval minutes as 1:1 seconds
         // example = interval = 600s, timeout = 10s
         let timeout = timer.timeInterval / 60
-        overlayController.show(duration: timeout, darkness: darkness, activateApp: true)
+        overlayController.show(duration: timeout, darkness: darkness)
     }
     
     @objc

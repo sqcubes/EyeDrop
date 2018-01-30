@@ -119,7 +119,7 @@ extension AppDelegate: EyeDropControllerDelegate {
     
     func menuHighlightsDarknessOption(darknessOption: DarknessOption?) {
         if let darknessOption = darknessOption {
-            previewOverlayController.show(duration: TimeInterval.infinity, darkness: darknessOption, activateApp: false)
+            previewOverlayController.preview(darkness: darknessOption)
         } else {
             previewOverlayController.hide()
         }
