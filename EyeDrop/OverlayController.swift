@@ -29,6 +29,7 @@ class OverlayController {
             overlayWindow.hasShadow = false
             overlayWindow.ignoresMouseEvents = false
             overlayWindow.isReleasedWhenClosed = false
+            overlayWindow.collectionBehavior = [.canJoinAllSpaces, .transient, ]
             overlayWindow.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(windowLevel)))
             overlayWindow.backgroundColor = NSColor.clear
             
