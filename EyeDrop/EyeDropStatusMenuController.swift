@@ -117,7 +117,7 @@ class EyeDropStatusMenuController: NSObject {
         menu.addItem(NSMenuItem.separator())
         
         // -- Pause
-        let pauseItem = NSMenuItem(title: NSLocalizedString("Pause", tableName: "menu", comment: "'Pause' the interval"), action: #selector(pauseIntervalTapped(sender:)), keyEquivalent: "p")
+        let pauseItem = NSMenuItem(title: NSLocalizedString("Pause", tableName: "menu", comment: "'Pause' the interval"), action: #selector(pauseIntervalTapped(sender:)), keyEquivalent: "")
         pauseItem.target = self
         menu.addItem(pauseItem)
         
@@ -140,7 +140,7 @@ class EyeDropStatusMenuController: NSObject {
         
         // Darkness options submenu
         let darknessMenuTitle = NSLocalizedString("Darkness", tableName: "menu", comment: "The menu item title which contains a submenu with gradations of darkness")
-        let darknessMenuItem = NSMenuItem(title: darknessMenuTitle, action: nil, keyEquivalent: "T")
+        let darknessMenuItem = NSMenuItem(title: darknessMenuTitle, action: nil, keyEquivalent: "")
         darknessMenuItem.submenu = darknessMenu
         darknessMenuItem.target = self
         darknessMenuItem.tag = MenuItemTags.DarknessMenu.tag
@@ -203,7 +203,7 @@ class EyeDropStatusMenuController: NSObject {
     
     private func populatePausedStatusBarMenu(menu: NSMenu) {
         // Resume
-        let resumeItem = NSMenuItem(title: NSLocalizedString("Resume", tableName: "menu", comment: "'Resume' the interval"), action: #selector(resumeIntervalTapped(sender:)), keyEquivalent: "r")
+        let resumeItem = NSMenuItem(title: NSLocalizedString("Resume", tableName: "menu", comment: "'Resume' the interval"), action: #selector(resumeIntervalTapped(sender:)), keyEquivalent: "")
         resumeItem.target = self
         menu.addItem(resumeItem)
         
@@ -219,7 +219,7 @@ class EyeDropStatusMenuController: NSObject {
     private func createQuitMenuItem() -> NSMenuItem {
         let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
         let title = String(format: NSLocalizedString("Quit %@", tableName: "menu", comment: "Quit <appname>"), appName)
-        return NSMenuItem(title: title, action: #selector(quitApplicationTapped(sender:)), keyEquivalent: "q")
+        return NSMenuItem(title: title, action: #selector(quitApplicationTapped(sender:)), keyEquivalent: "")
     }
     
     func update(forState state: EyeDropState) {
