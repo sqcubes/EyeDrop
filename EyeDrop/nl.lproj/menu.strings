@@ -20,10 +20,13 @@
 "Resume" = "Hervatten";
 
 /* Run after Login */
-"Run after Login" = "Starten na inloggen";
+"Run after Login" = "Start bij inloggen";
 
 /* Cancelable */
-"Cancelable" = "Annuleerbaar (ESC)";
+"Cancelable" = "Annuleerbaar";
+
+/* Pause in full screen */
+"Pause in full screen" = "Pauzeer in volledig-scherm applicaties";
 
 /* Blur */
 "Blur" = "Wazig";

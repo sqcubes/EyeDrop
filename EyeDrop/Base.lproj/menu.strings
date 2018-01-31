@@ -2,13 +2,13 @@
 "Darkness" = "Darkness";
 
 /* 'High' gradation of darkness */
-"High" = "Wow";
+"High" = "High";
 
 /* 'Low' gradation of darkness */
-"Low" = "So";
+"Low" = "Low";
 
 /* 'Medium' gradation of darkness */
-"Medium" = "Much";
+"Medium" = "Medium";
 
 /* 'Pause' the interval */
 "Pause" = "Pause";
@@ -20,10 +20,13 @@
 "Resume" = "Resume";
 
 /* Run after Login */
-"Run after Login" = "Run after Login";
+"Run after Login" = "Run when you login";
 
 /* Cancelable */
-"Cancelable" = "Cancelable (ESC)";
+"Cancelable" = "Cancelable";
+
+/* Pause in full screen */
+"Pause in full screen" = "Pause in fullscreen apps";
 
 /* Blur */
 "Blur" = "Blur";

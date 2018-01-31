@@ -23,7 +23,10 @@
 "Run after Login" = "Executar após iniciar";
 
 /* Cancelable */
-"Cancelable" = "Cancelável (ESC)";
+"Cancelable" = "Cancelável";
+
+/* Pause in full screen */
+"Pause in full screen" = "Ignorar aplicativos em tela cheia";
 
 /* Blur */
 "Blur" = "Desfocar";
