@@ -18,6 +18,8 @@ protocol EyeDropStatusMenuControllerDelegate {
     func menuToggleBlurTapped()
     func menuQuitApplicationTapped()
     func menuRunAfterLoginTapped()
+    func menuCancelableTapped()
+    func menuPauseInFullScreenTapped()
     func menuShouldUpdateState()
 }
 
@@ -28,6 +30,8 @@ private enum MenuItemTags: Int {
     case DarknessMenuOption
     case DarknessMenuBlur
     case RunAfterLogin
+    case Cancelable
+    case PauseInFullScreen
     
     var tag: Int { return rawValue }
 }
@@ -45,10 +49,10 @@ fileprivate extension EyeDropState {
             // using image assets not possible / working under 10.9
             // therefore falling back to fixed images
             switch self {
-            case .Active: return NSImage(named: "eyedrop_active")!
-            case .Delayed: return NSImage(named: "eyedrop_delayed")!
-            case .Normal: return NSImage(named: "eyedrop_normal")!
-            case .Paused: return NSImage(named: "eyedrop_pause")!
+            case .Active: return NSImage(named: NSImage.Name(rawValue: "eyedrop_active"))!
+            case .Delayed: return NSImage(named: NSImage.Name(rawValue: "eyedrop_delayed"))!
+            case .Normal: return NSImage(named: NSImage.Name(rawValue: "eyedrop_normal"))!
+            case .Paused: return NSImage(named: NSImage.Name(rawValue: "eyedrop_pause"))!
             }
         }
     }
@@ -95,7 +99,7 @@ class EyeDropStatusMenuController: NSObject {
     
     func show(currentState: EyeDropState) {
         // create status bar item
-        statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         statusItem!.highlightMode = true
         statusItem!.menu = normalMenu
         
@@ -113,7 +117,7 @@ class EyeDropStatusMenuController: NSObject {
         menu.addItem(NSMenuItem.separator())
         
         // -- Pause
-        let pauseItem = NSMenuItem(title: NSLocalizedString("Pause", tableName: "menu", comment: "'Pause' the interval"), action: #selector(pauseIntervalTapped(sender:)), keyEquivalent: "p")
+        let pauseItem = NSMenuItem(title: NSLocalizedString("Pause", tableName: "menu", comment: "'Pause' the interval"), action: #selector(pauseIntervalTapped(sender:)), keyEquivalent: "")
         pauseItem.target = self
         menu.addItem(pauseItem)
         
@@ -136,7 +140,7 @@ class EyeDropStatusMenuController: NSObject {
         
         // Darkness options submenu
         let darknessMenuTitle = NSLocalizedString("Darkness", tableName: "menu", comment: "The menu item title which contains a submenu with gradations of darkness")
-        let darknessMenuItem = NSMenuItem(title: darknessMenuTitle, action: nil, keyEquivalent: "T")
+        let darknessMenuItem = NSMenuItem(title: darknessMenuTitle, action: nil, keyEquivalent: "")
         darknessMenuItem.submenu = darknessMenu
         darknessMenuItem.target = self
         darknessMenuItem.tag = MenuItemTags.DarknessMenu.tag
@@ -147,6 +151,18 @@ class EyeDropStatusMenuController: NSObject {
         runAfterLoginItem.target = self
         runAfterLoginItem.tag = MenuItemTags.RunAfterLogin.tag
         menu.addItem(runAfterLoginItem)
+        
+        // -- Cancelable
+        let cancelableItem = NSMenuItem(title: NSLocalizedString("Cancelable", tableName: "menu", comment: ""), action: #selector(cancelableTapped(sender:)), keyEquivalent: "")
+        cancelableItem.target = self
+        cancelableItem.tag = MenuItemTags.Cancelable.tag
+        menu.addItem(cancelableItem)
+        
+        // -- PauseInFullScreen
+        let pauseInFullScreenItem = NSMenuItem(title: NSLocalizedString("Pause in full screen", tableName: "menu", comment: ""), action: #selector(pauseInFullScreenTapped(sender:)), keyEquivalent: "")
+        pauseInFullScreenItem.target = self
+        pauseInFullScreenItem.tag = MenuItemTags.PauseInFullScreen.tag
+        menu.addItem(pauseInFullScreenItem)
         
         // -- separator
         menu.addItem(NSMenuItem.separator())
@@ -187,7 +203,7 @@ class EyeDropStatusMenuController: NSObject {
     
     private func populatePausedStatusBarMenu(menu: NSMenu) {
         // Resume
-        let resumeItem = NSMenuItem(title: NSLocalizedString("Resume", tableName: "menu", comment: "'Resume' the interval"), action: #selector(resumeIntervalTapped(sender:)), keyEquivalent: "r")
+        let resumeItem = NSMenuItem(title: NSLocalizedString("Resume", tableName: "menu", comment: "'Resume' the interval"), action: #selector(resumeIntervalTapped(sender:)), keyEquivalent: "")
         resumeItem.target = self
         menu.addItem(resumeItem)
         
@@ -203,7 +219,7 @@ class EyeDropStatusMenuController: NSObject {
     private func createQuitMenuItem() -> NSMenuItem {
         let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
         let title = String(format: NSLocalizedString("Quit %@", tableName: "menu", comment: "Quit <appname>"), appName)
-        return NSMenuItem(title: title, action: #selector(quitApplicationTapped(sender:)), keyEquivalent: "q")
+        return NSMenuItem(title: title, action: #selector(quitApplicationTapped(sender:)), keyEquivalent: "")
     }
     
     func update(forState state: EyeDropState) {
@@ -236,6 +252,14 @@ class EyeDropStatusMenuController: NSObject {
         selectMenuItem(menu: normalMenu, itemTag: .RunAfterLogin, selected: runAfterLogin)
     }
     
+    func update(forCancelable cancelable: Bool) {
+        selectMenuItem(menu: normalMenu, itemTag: .Cancelable, selected: cancelable)
+    }
+    
+    func update(forPauseInFullScreen pauseInFullScreen: Bool) {
+        selectMenuItem(menu: normalMenu, itemTag: .PauseInFullScreen, selected: pauseInFullScreen)
+    }
+    
     func update(forInterval interval: TimeInterval) {
         selectMenuItem(menu: normalMenu, itemTag: .IntervalItem, matchingValue: interval)
     }
@@ -244,7 +268,7 @@ class EyeDropStatusMenuController: NSObject {
         for items in menu.items {
             if items.tag == itemTag.tag {
                 guard let itemValue = items.representedObject as? T else { continue }
-                items.state = itemValue == value ? NSOnState : NSOffState
+                items.state = itemValue == value ? NSControl.StateValue.on : NSControl.StateValue.off
             }
         }
     }
@@ -252,7 +276,7 @@ class EyeDropStatusMenuController: NSObject {
     private func selectMenuItem(menu: NSMenu, itemTag: MenuItemTags, selected: Bool) {
         for items in menu.items {
             if items.tag == itemTag.tag {
-                items.state = selected ? NSOnState : NSOffState
+                items.state = selected ? NSControl.StateValue.on : NSControl.StateValue.off
             }
         }
     }
@@ -307,6 +331,16 @@ class EyeDropStatusMenuController: NSObject {
     @objc
     private func runAfterLoginTapped(sender: AnyObject) {
         delegate?.menuRunAfterLoginTapped()
+    }
+    
+    @objc
+    private func cancelableTapped(sender: AnyObject) {
+        delegate?.menuCancelableTapped()
+    }
+    
+    @objc
+    private func pauseInFullScreenTapped(sender: AnyObject) {
+        delegate?.menuPauseInFullScreenTapped()
     }
     
     @objc

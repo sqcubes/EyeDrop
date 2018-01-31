@@ -9,7 +9,7 @@
 import Cocoa
 
 protocol OverlayViewDelegate {
-    func overlayViewClicked(overlayView: OverlayView)
+    func overlayViewCancelled(overlayView: OverlayView)
 }
 
 extension DarknessOption {
@@ -99,7 +99,7 @@ class OverlayView: NSView {
             context.duration = duration
             context.allowsImplicitAnimation = true
             context.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-            self?.progressViewZeroWidthConstraint?.priority = 750
+            self?.progressViewZeroWidthConstraint?.priority = NSLayoutConstraint.Priority(rawValue: 750)
             self?.layoutSubtreeIfNeeded()
         }, completionHandler: nil)
     }
@@ -110,11 +110,11 @@ class OverlayView: NSView {
     
         let visualEffectsView = NSVisualEffectView()
         visualEffectsView.translatesAutoresizingMaskIntoConstraints = false
-        visualEffectsView.material = NSVisualEffectMaterial.dark
-        visualEffectsView.blendingMode = NSVisualEffectBlendingMode.behindWindow
-        visualEffectsView.state = NSVisualEffectState.active
+        visualEffectsView.material = NSVisualEffectView.Material.dark
+        visualEffectsView.blendingMode = NSVisualEffectView.BlendingMode.behindWindow
+        visualEffectsView.state = NSVisualEffectView.State.active
         
-        addSubview(visualEffectsView, positioned: NSWindowOrderingMode.below, relativeTo: subviews.first)
+        addSubview(visualEffectsView, positioned: NSWindow.OrderingMode.below, relativeTo: subviews.first)
         let views = ["blur": visualEffectsView]
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[blur]-0-|", options: [], metrics: nil, views: views))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[blur]-0-|", options: [], metrics: nil, views: views))
@@ -131,6 +131,7 @@ class OverlayView: NSView {
         
         let views = ["backgroundView": darknessView]
         darknessView.translatesAutoresizingMaskIntoConstraints = false
+        darknessView.wantsLayer = true
         
         addSubview(darknessView, positioned: .above, relativeTo: blurView)
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[backgroundView]-0-|", options: [], metrics: nil, views: views))
@@ -138,7 +139,7 @@ class OverlayView: NSView {
     }
     
     private func addLogoViewIfNeeded() {
-        guard let logoImage = NSImage(named: "Watermark"), logoImageView.superview == nil else { return }
+        guard let logoImage = NSImage(named: NSImage.Name(rawValue: "Watermark")), logoImageView.superview == nil else { return }
         
         logoImageView.image = logoImage
         logoImageView.alphaValue = 0.1
@@ -161,24 +162,32 @@ class OverlayView: NSView {
         addSubview(progressView, positioned: .above, relativeTo: darknessView)
         
         let views = ["progressView": progressView]
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[progressView]", options: [], metrics: nil, views: views))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[progressView(2)]", options: [], metrics: nil, views: views))
         
-        let fullWidthConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
-        fullWidthConstraint.priority = 500
-        let zeroWidthConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 0)
-        zeroWidthConstraint.priority = 250
+        let fullWidthConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1.0, constant: 0)
+        fullWidthConstraint.priority = NSLayoutConstraint.Priority(rawValue: 500)
+        let zeroWidthConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1.0, constant: 0)
+        zeroWidthConstraint.priority = NSLayoutConstraint.Priority(rawValue: 250)
+        let centerHorizontallyConstraint = NSLayoutConstraint(item: progressView, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1.0, constant: 0.0)
         
         self.progressViewZeroWidthConstraint = zeroWidthConstraint
         
-        addConstraints([fullWidthConstraint, zeroWidthConstraint])
+        addConstraints([centerHorizontallyConstraint, fullWidthConstraint, zeroWidthConstraint])
     }
     
     override func mouseUp(with event: NSEvent) {
         super.mouseUp(with: event)
         if event.clickCount == 2 {
-            delegate?.overlayViewClicked(overlayView: self)
+            delegate?.overlayViewCancelled(overlayView: self)
         }
+    }
+    
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+    
+    override func cancelOperation(_ sender: Any?) {
+        delegate?.overlayViewCancelled(overlayView: self)
     }
     
     /**
@@ -196,7 +205,7 @@ class OverlayView: NSView {
      */
     static var isBlurAvailable: Bool {
         guard #available(OSX 10.10, *) else { return false }
-        return !NSWorkspace.shared().accessibilityDisplayShouldReduceTransparency
+        return !NSWorkspace.shared.accessibilityDisplayShouldReduceTransparency
     }
 }
 

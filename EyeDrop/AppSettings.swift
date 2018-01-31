@@ -6,6 +6,8 @@ public enum AppSettings: Int, Hashable {
     case darknessOption
     case blurEnabled
     case runAfterLogin
+    case cancelable
+    case pauseInFullScreen
     
     private static var defaults: UserDefaults { return UserDefaults.standard }
     private var defaults: UserDefaults { return AppSettings.defaults }
@@ -17,6 +19,8 @@ public enum AppSettings: Int, Hashable {
         case .darknessOption: return "darknessOption"
         case .blurEnabled: return "blurEnabled"
         case .runAfterLogin: return "runAfterLogin"
+        case .cancelable: return "cancelable"
+        case .pauseInFullScreen: return "pauseInFullScreen"
         }
     }
     
@@ -27,6 +31,8 @@ public enum AppSettings: Int, Hashable {
         case .darknessOption: return DarknessOption.Low.rawValue
         case .blurEnabled: return true
         case .runAfterLogin: return false
+        case .cancelable: return true
+        case .pauseInFullScreen: return true
         }
     }
     
@@ -43,13 +49,13 @@ public enum AppSettings: Int, Hashable {
     public var url: URL? { return defaults.url(forKey: key) }
     public func remove() { defaults.removeObject(forKey: key) }
     
-    @discardableResult public func set(_ value: Any?) { defaults.set(value, forKey: key) }
-    @discardableResult public func set(_ value: Int)  { defaults.set(value, forKey: key) }
-    @discardableResult public func set(_ value: Int64) { defaults.set(value, forKey: key) }
-    @discardableResult public func set(_ value: Float) { defaults.set(value, forKey: key) }
-    @discardableResult public func set(_ value: Double) { defaults.set(value, forKey: key) }
-    @discardableResult public func set(_ value: Bool) { defaults.set(value, forKey: key) }
-    @discardableResult public func set(_ url: URL) { defaults.set(value, forKey: key) }
+    public func set(_ value: Any?) { defaults.set(value, forKey: key) }
+    public func set(_ value: Int)  { defaults.set(value, forKey: key) }
+    public func set(_ value: Int64) { defaults.set(value, forKey: key) }
+    public func set(_ value: Float) { defaults.set(value, forKey: key) }
+    public func set(_ value: Double) { defaults.set(value, forKey: key) }
+    public func set(_ value: Bool) { defaults.set(value, forKey: key) }
+    public func set(_ url: URL) { defaults.set(value, forKey: key) }
     
     public static func registerDefaults() {
         var defaults = [String:Any]()
