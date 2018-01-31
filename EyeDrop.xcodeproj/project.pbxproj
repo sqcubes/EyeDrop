@@ -79,7 +79,6 @@
 		DFD4DE221E32AC1700C88A05 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nl; path = nl.lproj/menu.stringsdict; sourceTree = "<group>"; };
 		DFD4DE231E32AC1700C88A05 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DFD4DE241E32AC1700C88A05 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		DFD4DE251E32AD1200C88A05 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/menu.strings"; sourceTree = "<group>"; };
 		DFD4DE261E32AD1200C88A05 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-PT"; path = "pt-PT.lproj/menu.stringsdict"; sourceTree = "<group>"; };
 		DFDC50C41E3891E10032ACE0 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		DFDC50CA1E38C04C0032ACE0 /* eyedrop_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eyedrop_active.png; sourceTree = "<group>"; };
@@ -440,7 +439,6 @@
 			children = (
 				DFD4DE1F1E32A99300C88A05 /* Base */,
 				DFD4DE211E32AC1700C88A05 /* nl */,
-				DFD4DE251E32AD1200C88A05 /* pt-PT */,
 			);
 			name = menu.strings;
 			sourceTree = "<group>";
